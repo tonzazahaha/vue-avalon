@@ -16,7 +16,7 @@ $blue: #007bff !default;
 $indigo: #6610f2 !default;
 $purple: #6f42c1 !default;
 $pink: #e83e8c !default;
-$red: #dc3545 !default;
+$red: #EB5757 !default;
 $orange: #fd7e14 !default;
 $yellow: #ffc107 !default;
 $green: #28a745 !default;
@@ -26,12 +26,12 @@ $cyan: #17a2b8 !default;
 // Theme color default definitions
 $primary: $blue !default;
 $secondary: $gray-600 !default;
-$success: $green !default;
-$info: $cyan !default;
+$success: #219F5B !default;
+$info: #678DF0 !default;
 $warning: $yellow !default;
 $danger: $red !default;
-$light: $gray-100 !default;
-$dark: $gray-800 !default;
+$light: #36394A !default;
+$dark: #2B2D3B !default;
 
 // This table defines the theme colors (variant names)
 $theme-colors: () !default;
