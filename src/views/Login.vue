@@ -1,28 +1,35 @@
 <template>
 
   <div>
-    <p>Register page</p>
-    <img alt="Avalon logo" src="../assets/avalon.png">
-    <b-button>Button</b-button>
-    <b-button variant="danger">Button</b-button>
-    <b-button variant="success">Button</b-button>
-    <b-button variant="outline-primary">Button</b-button>
-
+    <img alt="Avalon logo" src="../assets/avalon.png" class="mx-auto d-block">
+    <div class = "login">
+     <form>
+         <p style="color:White">Email</p>
+         <input type="text" placeholder="Enter your email" v-model="name"/>
+         <p style="color:White">Password</p>
+         <input type="password" placeholder="Enter your password" v-model="password"/><br>
+         <button type="submit" class="btn btn-primary mb-2">Login</button>
+    </form>
+    <p style="color:White">Don’t have account?<p> <p style="color:Blue" >Create a account</p>
+    </div>
   </div>
-</template>
+ </template>
 
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-  name: 'home',
-  components: {
-    // HelloWorld
-  }
+  name: 'login'
 }
 </script>
 
 <style scoped>
-
+.regis{
+  margin: auto;
+  text-align: center;
+  width: 40%;
+  border-radius: 5px;
+  background: rgba(37, 41, 50, 0.7);
+}
 </style>
