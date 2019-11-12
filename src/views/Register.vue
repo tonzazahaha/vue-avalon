@@ -1,13 +1,15 @@
 <template>
 
   <div>
-    <p>Register page</p>
-    <img alt="Avalon logo" src="../assets/avalon.png">
-    <b-button>Button</b-button>
-    <b-button variant="danger">Button</b-button>
-    <b-button variant="success">Button</b-button>
-    <b-button variant="outline-primary">Button</b-button>
-
+    <br>
+    <br>
+    <img alt="Avalon logo" class="rounded mx-auto d-block" src="../assets/avalon.png">
+    <div class="container">
+      <div class="row">
+          <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div>
+      </div>
+    <!-- <b-button variant="danger">Button</b-button> -->
+    </div>
   </div>
 </template>
 
