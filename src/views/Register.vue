@@ -10,7 +10,7 @@
             <b-form-input v-model="text" placeholder="Enter the email"></b-form-input><br>
           </div>
           <div><p style="color:White">Password</p>
-            <b-form-input v-model="password" placeholder="Enter the password"></b-form-input><br>
+            <b-form-input type="password" placeholder="Enter the password"></b-form-input><br>
           </div>
           <div>
             <p style="color:White">Username</p>
