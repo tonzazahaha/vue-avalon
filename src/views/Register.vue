@@ -4,11 +4,21 @@
     <br>
     <br>
     <img alt="Avalon logo" class="rounded mx-auto d-block" src="../assets/avalon.png">
-    <div class="container">
-      <div class="row">
-          <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div>
+    <div class="container" >
+      <div class="mx-auto">
+          <div><p style="color:White">Email</p>
+            <b-form-input v-model="text" placeholder="Enter the email"></b-form-input><br>
+          </div>
+          <div><p style="color:White">Password</p>
+            <b-form-input v-model="password" placeholder="Enter the password"></b-form-input><br>
+          </div>
+          <div>
+            <p style="color:White">Username</p>
+            <b-form-input v-model="text" placeholder="Enter the username"></b-form-input><br>
+          </div>
+          <b-button block variant="primary">Register</b-button>
       </div>
-    <!-- <b-button variant="danger">Button</b-button> -->
+    <p style="color:White" text-align="center">Already have an account? <a href="/login">Login</a></p>
     </div>
   </div>
 </template>
