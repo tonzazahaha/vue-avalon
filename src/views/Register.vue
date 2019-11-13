@@ -1,40 +1,99 @@
 <template>
+  <div class="register text-white">
+    <layout-not-auth>
+      <b-form @submit.prevent="onSubmit">
+        <!-- profile -->
+        <div class="upload-image">+</div>
+        <!-- email -->
+        <b-form-group
+          id="email-group"
+          label="Email"
+          label-for="email"
+        >
+          <b-form-input
+            id="email"
+            type="email"
+            v-model="form.email"
+            required
+            placeholder="Enter the email"
+          ></b-form-input>
+        </b-form-group>
+        <!-- password -->
+        <b-form-group
+          id="password-group"
+          label="Password"
+          label-for="password"
+        >
+          <b-form-input
+            id="password"
+            type="password"
+            v-model="form.password"
+            required
+            placeholder="Enter the password"
+          ></b-form-input>
+        </b-form-group>
+        <!-- username -->
+        <b-form-group
+          id="username-group"
+          label="Username"
+          label-for="username"
+        >
+          <b-form-input
+            id="username"
+            type="text"
+            v-model="form.username"
+            required
+            placeholder="Enter the username"
+          ></b-form-input>
+        </b-form-group>
 
-  <div>
-    <br>
-    <br>
-    <img alt="Avalon logo" class="rounded mx-auto d-block" src="../assets/avalon.png">
-    <div class="container" >
-      <div class="mx-auto">
-          <div><p style="color:White">Email</p>
-            <b-form-input v-model="text" placeholder="Enter the email"></b-form-input><br>
-          </div>
-          <div><p style="color:White">Password</p>
-            <b-form-input type="password" placeholder="Enter the password"></b-form-input><br>
-          </div>
-          <div>
-            <p style="color:White">Username</p>
-            <b-form-input v-model="text" placeholder="Enter the username"></b-form-input><br>
-          </div>
-          <b-button block variant="primary">Register</b-button>
-      </div>
-    <p style="color:White" text-align="center">Already have an account? <router-link to="/login">Login</router-link></p>
-    </div>
+        <b-button block class="mt-4" type="submit" variant="primary">Register</b-button>
+      </b-form>
+    </layout-not-auth>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
+import LayoutNotAuth from '../components/LayoutNotAuth'
 
 export default {
   name: 'home',
   components: {
-    // HelloWorld
+    LayoutNotAuth
+  },
+  data () {
+    return {
+      form: {
+        email: '',
+        password: '',
+        username: ''
+      }
+    }
+  },
+  methods: {
+    onSubmit () {
+      console.log(this.form)
+      this.$router.push('/login')
+    }
   }
 }
 </script>
 
 <style scoped>
-
+.upload-image {
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 95px;
+  background-color: grey;
+  margin: 0px auto 20px auto;
+  font-size: 30px;
+  cursor: pointer;
+  transition: .3s all;
+}
+.upload-image:hover {
+  opacity: .7;
+}
 </style>
