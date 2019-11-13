@@ -18,7 +18,7 @@
           </div>
           <b-button block variant="primary">Register</b-button>
       </div>
-    <p style="color:White" text-align="center">Already have an account? <a href="/login">Login</a></p>
+    <p style="color:White" text-align="center">Already have an account? <router-link to="/login">Login</router-link></p>
     </div>
   </div>
 </template>
