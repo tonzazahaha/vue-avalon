@@ -21,12 +21,7 @@ export default {
   },
   watch: {
     '$route.name': function (name) {
-      this.showHeader = !this.isInArray(name, this.pageNotRequiredHeader)
-    }
-  },
-  methods: {
-    isInArray (e, array) {
-      return array.indexOf(e) > -1
+      this.showHeader = !(this.pageNotRequiredHeader.indexOf(name) > -1)
     }
   }
 }
