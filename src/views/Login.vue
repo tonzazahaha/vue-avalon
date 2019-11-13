@@ -1,6 +1,8 @@
 <template>
 
   <div>
+    <br>
+    <br>
     <img alt="Avalon logo" src="../assets/avalon.png" class="mx-auto d-block">
     <div class = "login">
      <form>
