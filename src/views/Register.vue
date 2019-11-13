@@ -5,7 +5,7 @@
         <img :src="form.profile" class="profile-preview" alt="">
         <b-form-group
           id="profile-group"
-          label="Profile"
+          label="Photo Url"
           label-for="profile"
         >
           <b-form-input
@@ -62,7 +62,6 @@
         <b-button block class="mt-4" type="submit" variant="primary">Register</b-button>
         <span class="mt-5">
           Already have an account? <router-link to="/login">Login</router-link>
-          {{ isPreviewProfile }}
         </span>
       </b-form>
     </layout-not-auth>
@@ -89,18 +88,28 @@ export default {
   },
   methods: {
     onSubmit () {
-      console.log(this.form)
-      this.$router.push('/login')
-    }
-  },
-  computed: {
-    isPreviewProfile () {
-      var isImgUrl = /(http(s?):)([/|.|\w|s|-])*\.(?:jpg|jpeg|gif|png)/g
       if (this.form.profile !== '') {
-        return isImgUrl.test(this.form.profile)
+        this.$store.dispatch('Auth/register', {
+          email: this.form.email,
+          password: this.form.password,
+          name: this.form.username,
+          profilePic: this.form.profile
+        })
+          .then(result => {
+            alert('Register Success')
+            this.$router.push('/login')
+          })
+          .catch(err => {
+            console.log(err)
+          })
       } else {
-        return false
+        alert('Must be image url')
       }
+    },
+    isImageUrl (imageUrl) {
+      var isImgUrl = /(http(s?):)([/|.|\w|s|-])*\.(?:jpg|jpeg|gif|png)/g
+      if (imageUrl !== '') return isImgUrl.test(imageUrl)
+      return false
     }
   }
 }
