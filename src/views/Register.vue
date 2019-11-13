@@ -2,8 +2,20 @@
   <div class="register text-white">
     <layout-not-auth>
       <b-form @submit.prevent="onSubmit">
-        <!-- profile -->
-        <div class="upload-image">+</div>
+        <img :src="form.profile" class="profile-preview" alt="">
+        <b-form-group
+          id="profile-group"
+          label="Profile"
+          label-for="profile"
+        >
+          <b-form-input
+            id="profile"
+            type="text"
+            v-model="form.profile"
+            required
+            placeholder="Enter the profile url"
+          ></b-form-input>
+        </b-form-group>
         <!-- email -->
         <b-form-group
           id="email-group"
@@ -48,6 +60,10 @@
         </b-form-group>
 
         <b-button block class="mt-4" type="submit" variant="primary">Register</b-button>
+        <span class="mt-5">
+          Already have an account? <router-link to="/login">Login</router-link>
+          {{ isPreviewProfile }}
+        </span>
       </b-form>
     </layout-not-auth>
   </div>
@@ -64,6 +80,7 @@ export default {
   data () {
     return {
       form: {
+        profile: '',
         email: '',
         password: '',
         username: ''
@@ -75,25 +92,31 @@ export default {
       console.log(this.form)
       this.$router.push('/login')
     }
+  },
+  computed: {
+    isPreviewProfile () {
+      var isImgUrl = /(http(s?):)([/|.|\w|s|-])*\.(?:jpg|jpeg|gif|png)/g
+      if (this.form.profile !== '') {
+        return isImgUrl.test(this.form.profile)
+      } else {
+        return false
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
-.upload-image {
+.profile-preview {
   display: block;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   text-align: center;
   line-height: 95px;
   background-color: grey;
   margin: 0px auto 20px auto;
   font-size: 30px;
-  cursor: pointer;
   transition: .3s all;
-}
-.upload-image:hover {
-  opacity: .7;
 }
 </style>

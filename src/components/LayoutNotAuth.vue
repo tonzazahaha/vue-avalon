@@ -6,7 +6,7 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col cols="6" class="mx-auto p-5 bg-dark">
+        <b-col cols="6" class="mx-auto mb-5 p-5 bg-dark">
           <slot></slot>
         </b-col>
       </b-row>
