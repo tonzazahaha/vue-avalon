@@ -30,7 +30,7 @@
             placeholder="Enter the password"
           ></b-form-input>
         </b-form-group>
-        <b-button block class="mt-4" type="submit" variant="primary">Register</b-button>
+        <b-button block class="mt-4" type="submit" variant="primary">Login</b-button>
         <span class="mt-5">
           Don't have any account? <router-link to="/register">Create an account</router-link>
         </span>
