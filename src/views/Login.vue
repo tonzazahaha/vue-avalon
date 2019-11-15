@@ -61,7 +61,6 @@ export default {
 </script>
 
 <style scoped>
-<<<<<<< HEAD
 .login{
   margin: auto;
   text-align: center;
@@ -69,7 +68,4 @@ export default {
   border-radius: 5px;
   background: rgba(37, 41, 50, 0.7);
 }
-=======
-
->>>>>>> 81aac5c20064838a1d1fd69d19fdfdbc154d53a4
 </style>
