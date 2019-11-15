@@ -29,9 +29,63 @@
  </template>
 
 <script>
+import LayoutNotAuth from '../components/LayoutNotAuth'
 
+export default {
+  name: 'home',
+  components: {
+    LayoutNotAuth
+  },
+  data () {
+    return {
+      form: {
+        profile: '',
+        email: '',
+        password: '',
+        username: ''
+      }
+    }
+  },
+  methods: {
+    onSubmit () {
+      if (this.form.profile !== '') {
+        this.$store.dispatch('Auth/register', {
+          email: this.form.email,
+          password: this.form.password,
+          name: this.form.username,
+          profilePic: this.form.profile
+        })
+          .then(result => {
+            alert('Register Success')
+            this.$router.push('/login')
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else {
+        alert('Must be image url')
+      }
+    },
+    isImageUrl (imageUrl) {
+      var isImgUrl = /(http(s?):)([/|.|\w|s|-])*\.(?:jpg|jpeg|gif|png)/g
+      if (imageUrl !== '') return isImgUrl.test(imageUrl)
+      return false
+    }
+  }
+}
 </script>
 
 <style scoped>
-
+.profile-preview {
+  display: block;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 95px;
+  background-color: grey;
+  margin: 0px auto 20px auto;
+  font-size: 30px;
+  transition: .3s all;
+}
 </style>

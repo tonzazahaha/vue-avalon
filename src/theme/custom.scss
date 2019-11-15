@@ -25,13 +25,14 @@ $cyan: #17a2b8 !default;
 
 // Theme color default definitions
 $primary: $blue !default;
-$secondary: $gray-600 !default;
+$secondary: #eee !default;
 $success: #219F5B !default;
 $info: #678DF0 !default;
 $warning: $yellow !default;
 $danger: $red !default;
 $light: #36394A !default;
 $dark: #2B2D3B !default;
+$tabhead: #565a76 !default;
 
 // This table defines the theme colors (variant names)
 $theme-colors: () !default;
@@ -44,7 +45,8 @@ $theme-colors: map-merge(
         'warning': $warning,
         'danger': $danger,
         'light': $light,
-        'dark': $dark
+        'dark': $dark,
+        'tabhead': $tabhead,
     ),
     $theme-colors
 );
