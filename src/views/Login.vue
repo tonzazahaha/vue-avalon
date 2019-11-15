@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style scoped>
-.regis{
+.login{
   margin: auto;
   text-align: center;
   width: 40%;
