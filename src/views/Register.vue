@@ -1,32 +1,72 @@
 <template>
-  <div>
-    <img alt="Avalon logo" src="../assets/avalon.png" class="mx-auto d-block">
-    <b-card style="max-width: 20rem; background-color: #2A2E39" >
-    <b-form-group id="input-group-1" label="Email" label-for="input-1" style="color:white" width="10rem">
-        <b-form-input
-          id="input-1"
-          placeholder="Enter the email"
-        ></b-form-input>
-      </b-form-group>
+  <div class="register text-white">
+    <layout-not-auth>
+      <b-form @submit.prevent="onSubmit">
+        <img :src="form.profile" class="profile-preview" alt="">
+        <b-form-group
+          id="profile-group"
+          label="Photo Url"
+          label-for="profile"
+        >
+          <b-form-input
+            id="profile"
+            type="text"
+            v-model="form.profile"
+            required
+            placeholder="Enter the profile url"
+          ></b-form-input>
+        </b-form-group>
+        <!-- email -->
+        <b-form-group
+          id="email-group"
+          label="Email"
+          label-for="email"
+        >
+          <b-form-input
+            id="email"
+            type="email"
+            v-model="form.email"
+            required
+            placeholder="Enter the email"
+          ></b-form-input>
+        </b-form-group>
+        <!-- password -->
+        <b-form-group
+          id="password-group"
+          label="Password"
+          label-for="password"
+        >
+          <b-form-input
+            id="password"
+            type="password"
+            v-model="form.password"
+            required
+            placeholder="Enter the password"
+          ></b-form-input>
+        </b-form-group>
+        <!-- username -->
+        <b-form-group
+          id="username-group"
+          label="Username"
+          label-for="username"
+        >
+          <b-form-input
+            id="username"
+            type="text"
+            v-model="form.username"
+            required
+            placeholder="Enter the username"
+          ></b-form-input>
+        </b-form-group>
 
-      <b-form-group id="input-group-2" label="Password" label-for="input-2" style="color:white">
-        <b-form-input
-          id="input-2"
-          placeholder="Enter the password"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-3" label="Username" label-for="input-3" style="color:white">
-        <b-form-input
-          id="input-3"
-          placeholder="Enter the username"
-        ></b-form-input>
-      </b-form-group>
-      <b-button variant="primary" style="color:white">Register</b-button> //color buttom #524370
-      <p style="color:white">Already have an account?</p>
-    </b-card>
+        <b-button block class="mt-4" type="submit" variant="primary">Register</b-button>
+        <span class="mt-5">
+          Already have an account? <router-link to="/login">Login</router-link>
+        </span>
+      </b-form>
+    </layout-not-auth>
   </div>
- </template>
+</template>
 
 <script>
 import LayoutNotAuth from '../components/LayoutNotAuth'
