@@ -23,6 +23,7 @@
         ></b-form-input>
       </b-form-group>
       <b-button variant="primary" style="color:white">Register</b-button> //color buttom #524370
+      <p style="color:white">Already have an account?</p>
     </b-card>
   </div>
  </template>
