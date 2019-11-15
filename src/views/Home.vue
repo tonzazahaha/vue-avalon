@@ -1,10 +1,9 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <b-button>Button</b-button>
-    <b-button variant="danger">Button</b-button>
-    <b-button variant="success">Button</b-button>
-    <b-button variant="outline-primary">Button</b-button>
+    <b-img center src="../assets/AVALON-red.png" fluid alt="Avalon logo"></b-img>
+    <br>
+    <br>
+    <br>
   </div>
 </template>
 
