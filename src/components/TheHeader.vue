@@ -1,6 +1,6 @@
 <template>
   <b-navbar variant="dark" type="dark" class="sticky-top">
-    <b-navbar-brand href="#" class="ml-2">
+    <b-navbar-brand to="/" class="ml-2">
       <img
         src="https://placekitten.com/g/30/30"
         class="d-inline-block align-top pr-3"
