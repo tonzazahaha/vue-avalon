@@ -56,6 +56,15 @@ export default {
     }
   },
   methods: {
+    onSubmit () {
+      if (this.form.profile !== '') {
+        alert('Login Success')
+        this.$router.push('/lobby')
+      } else {
+        alert('Error')
+      }
+    }
+
   }
 }
 </script>
