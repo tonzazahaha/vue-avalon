@@ -1,7 +1,7 @@
 <template>
   <b-container fluid>
     <b-row class="flex-xl-nowrap">
-      <b-col>
+      <b-col cols="9" class="px-0">
         <slot></slot>
       </b-col>
       <b-col cols="4" class="sidebar bg-secondary px-0 fixed-bottom">

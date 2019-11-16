@@ -10,7 +10,7 @@
     >
       <b-tab v-for="(tab, i) in tabs" :key="i">
         <template v-slot:title>
-          <em class="material-icons pt-2" style="font-size: 15px;">{{ tab.icon }}</em>
+          <em class="material-icons pt-2 pb-2" style="font-size: 20px;">{{ tab.icon }}</em>
           <span class="pl-2" v-if="i === tabIndex && tab.title">
             {{ tab.title }}
           </span>
@@ -46,7 +46,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .sidebar-content {
   overflow-y: auto;
   max-height: calc(100vh - 10rem);
