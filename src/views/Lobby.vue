@@ -5,7 +5,7 @@
         <b-col>
           room name
         </b-col>
-        <b-col cols="4" class="sidebar bg-dark px-0">
+        <b-col cols="4" class="sidebar bg-secondary px-0 fixed-bottom">
           <the-sidebar />
         </b-col>
       </b-row>
@@ -30,10 +30,13 @@ export default {
 <style scoped>
 .sidebar {
   /* display: block; */
-  position: sticky;
-  height: calc(100vh - 62px);
+  /* position: sticky; */
+  height: calc(100vh - 50px);
+  top: 60px;
+  left: calc(100vw - 345px);
   max-width: 345px;
   min-width: 345px;
-  word-wrap:break-word;
+  word-wrap: break-word;
+  z-index: 1000;
 }
 </style>
