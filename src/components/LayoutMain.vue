@@ -2,7 +2,7 @@
   <b-container fluid>
     <b-row class="flex-xl-nowrap">
       <b-col>
-        <v-slot></v-slot>
+        <slot></slot>
       </b-col>
       <b-col cols="4" class="sidebar bg-secondary px-0 fixed-bottom">
         <the-sidebar />
