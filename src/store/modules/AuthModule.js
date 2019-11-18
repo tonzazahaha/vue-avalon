@@ -31,13 +31,13 @@ const AuthModule = {
           })
       })
     },
-    login ({ commit },payload){
+    login ({ commit }, payload) {
       return new Promise((resolve, reject) => {
-        $api({path: '/login',method: 'get',data: payload})
+        $api({ path: '/login', method: 'post', data: payload })
           .then(res => {
-            if(res.success){
+            if (res.success) {
               resolve(res)
-            } else{
+            } else {
               reject(new Error('response fail'))
             }
           })
@@ -50,5 +50,3 @@ const AuthModule = {
 }
 
 export default AuthModule
-
-
