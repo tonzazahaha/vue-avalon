@@ -1,7 +1,7 @@
 <template>
   <div class="lobby">
     <layout-main>
-      <b-container>
+      <b-container fluid>
         <b-row>
           <b-col cols="auto" class="ml-auto p-3">
             <b-button variant="info" size="sm" class="px-4">Create Room</b-button>
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     joinRoom (roomId) {
-      alert(roomId)
+      this.$router.push(`/room/${roomId}`)
     }
   }
 }
