@@ -72,6 +72,7 @@ export default {
   },
   created () {
     this.$store.dispatch('Lobby/socketFetchRoom', null)
+    this.$store.dispatch('Lobby/connectSocket')
   },
   computed: {
     roomList () {

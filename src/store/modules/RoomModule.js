@@ -15,6 +15,5 @@ const RoomModule = {
     }
   },
   actions: {
-    
   }
 }

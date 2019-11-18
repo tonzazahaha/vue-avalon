@@ -1,7 +1,10 @@
+import io from 'socket.io-client'
+
 const LobbyModule = {
   namespaced: true,
   state: {
-    rooms: []
+    rooms: [],
+    socket: null
   },
   getters: {
     getRoomList (state) {
@@ -11,6 +14,9 @@ const LobbyModule = {
   mutations: {
     SETROOMS (state, payload) {
       state.rooms = payload
+    },
+    SETSOCKET (state, payload) {
+      state.socket = payload
     }
   },
   actions: {
@@ -25,6 +31,10 @@ const LobbyModule = {
       let oldRoom = [ ...state.rooms ]
       oldRoom.push(payload)
       commit('SETROOMS', oldRoom)
+    },
+    connectSocket ({ commit, state }, payload) {
+      commit('SETSOCKET', io('localhost:3000/lobby'))
+      state.socket.emit('enterLobby', { username: 'hello' })
     }
   }
 }
