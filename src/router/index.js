@@ -30,6 +30,11 @@ const routes = [
     component: () => import('../views/Lobby.vue')
   },
   {
+    path: '/room/:roomId',
+    name: 'room',
+    component: () => import('../views/Room.vue')
+  },
+  {
     path: '/ingame',
     name: 'ingame',
     component: () => import('../views/Ingame.vue')

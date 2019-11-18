@@ -1,17 +1,17 @@
 <template>
   <div class="lobby">
     <layout-main>
-      <b-container>
+      <b-container fluid>
         <b-row>
           <b-col cols="auto" class="ml-auto p-3">
-            <b-button variant="info" size="sm" class="px-4">Create Room</b-button>
+            <b-button variant="info" size="sm" class="px-4" @click="createRoom">Create Room</b-button>
           </b-col>
         </b-row>
         <b-row>
           <b-col class="p-1 ml-0">
             <b-table
               :fields="roomTable.fields"
-              :items="roomTable.items"
+              :items="roomList"
               head-variant="light"
               table-variant="light"
               dark
@@ -53,23 +53,7 @@ export default {
           { key: 'size', sortable: true },
           { key: 'action' }
         ],
-        items: [
-          { room_id: '0001', room_name: 'room1##', mode: 'nomal', amoung: 7, max: 10 },
-          { room_id: '0002', room_name: '1-1 dai mod kub', mode: 'nomal', amoung: 7, max: 7 },
-          { room_id: '0003', room_name: 'kai kak', mode: 'Expert', amoung: 2, max: 5 },
-          { room_id: '0004', room_name: 'Who\'s in the room', mode: 'nomal', amoung: 5, max: 5 },
-          { room_id: '0005', room_name: 'come on baby', mode: 'nomal', amoung: 3, max: 8 },
-          { room_id: '0001', room_name: 'room1##', mode: 'nomal', amoung: 7, max: 10 },
-          { room_id: '0002', room_name: '1-1 dai mod kub', mode: 'nomal', amoung: 7, max: 7 },
-          { room_id: '0003', room_name: 'kai kak', mode: 'Expert', amoung: 2, max: 5 },
-          { room_id: '0004', room_name: 'Who\'s in the room', mode: 'nomal', amoung: 5, max: 5 },
-          { room_id: '0005', room_name: 'come on baby', mode: 'nomal', amoung: 3, max: 8 },
-          { room_id: '0001', room_name: 'room1##', mode: 'nomal', amoung: 7, max: 10 },
-          { room_id: '0002', room_name: '1-1 dai mod kub', mode: 'nomal', amoung: 7, max: 7 },
-          { room_id: '0003', room_name: 'kai kak', mode: 'Expert', amoung: 2, max: 5 },
-          { room_id: '0004', room_name: 'Who\'s in the room', mode: 'nomal', amoung: 5, max: 5 },
-          { room_id: '0005', room_name: 'come on baby', mode: 'nomal', amoung: 3, max: 8 }
-        ]
+        items: []
       }
     }
   },
@@ -78,7 +62,20 @@ export default {
   },
   methods: {
     joinRoom (roomId) {
-      alert(roomId)
+      this.$router.push(`/room/${roomId}`)
+    },
+    createRoom () {
+      this.$store.dispatch('Lobby/createRoom', {
+        room_id: '0034', room_name: 'new room', mode: 'nomal', amoung: 8, max: 10
+      })
+    }
+  },
+  created () {
+    this.$store.dispatch('Lobby/socketFetchRoom', null)
+  },
+  computed: {
+    roomList () {
+      return this.$store.getters['Lobby/getRoomList']
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <b-container fluid>
     <b-row class="flex-xl-nowrap">
-      <b-col cols="9" class="px-0">
+      <b-col cols="9" class="px-1 body">
         <slot></slot>
       </b-col>
       <b-col cols="4" class="sidebar bg-secondary px-0 fixed-bottom">
@@ -22,6 +22,10 @@ export default {
 </script>
 
 <style>
+.body {
+  max-width: calc(100vw - 345px);
+  min-width: calc(100vw - 345px);
+}
 .sidebar {
   /* display: block; */
   /* position: sticky; */
@@ -32,5 +36,8 @@ export default {
   min-width: 345px;
   word-wrap: break-word;
   z-index: 1000;
+}
+.body {
+  height: calc(100vh - 65px);
 }
 </style>
