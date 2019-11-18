@@ -30,8 +30,25 @@ const AuthModule = {
             reject(err)
           })
       })
+    },
+    login ({ commit },payload){
+      return new Promise((resolve, reject) => {
+        $api({path: '/login',method: 'get',data: payload})
+          .then(res => {
+            if(res.success){
+              resolve(res)
+            } else{
+              reject(new Error('response fail'))
+            }
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
     }
   }
 }
 
 export default AuthModule
+
+

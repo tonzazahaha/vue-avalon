@@ -57,14 +57,19 @@ export default {
   },
   methods: {
     onSubmit () {
-      if (this.form.profile !== '') {
-        alert('Login Success')
-        this.$router.push('/lobby')
+      if (this.form.email !== '') {
+        this.$store.dispatch('Auth/login', {
+          email: this.form.email,
+          password: this.form.password
+        })
+          .then(result => {
+            alert('Login Success')
+            this.$router.push('/lobby')
+          })
       } else {
         alert('Error')
       }
     }
-
   }
 }
 </script>
