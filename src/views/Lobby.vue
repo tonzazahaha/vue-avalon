@@ -71,13 +71,16 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('Lobby/socketFetchRoom', null)
     this.$store.dispatch('Lobby/connectSocket')
+    this.$store.dispatch('Lobby/socketFetchRoom', null)
   },
   computed: {
     roomList () {
       return this.$store.getters['Lobby/getRoomList']
     }
+  },
+  destroyed () {
+    this.$store.dispatch('Lobby/disConnectSocket')
   }
 }
 </script>

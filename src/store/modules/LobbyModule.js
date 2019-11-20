@@ -33,8 +33,16 @@ const LobbyModule = {
       commit('SETROOMS', oldRoom)
     },
     connectSocket ({ commit, state }, payload) {
-      commit('SETSOCKET', io('localhost:3000/lobby'))
-      state.socket.emit('enterLobby', { username: 'hello' })
+      let user = {
+        username: 'tose',
+        userId: '12345'
+      }
+      commit('SETSOCKET', io('localhost:3000/lobby', { query: user }))
+      // state.socket.emit('enterLobby', { username: 'hello' })
+    },
+    disConnectSocket ({ commit, state }, payload) {
+      state.socket.disconnect()
+      commit('SETSOCKET', null)
     }
   }
 }
