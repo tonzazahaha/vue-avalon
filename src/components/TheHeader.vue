@@ -13,13 +13,13 @@
       <b-nav-item-dropdown text="Lang" class="mr-2" right>
         <template v-slot:button-content>
           <b-img
-            :src="user.photoUrl"
-            alt="photoUrl"
+            :src="changeUrl"
+            alt=""
             width="30"
             rounded="circle"
           >
           </b-img>
-          <span class="pl-3">{{ user.name }}</span>
+          <span class="pl-3">{{ changeName }}</span>
         </template>
         <b-dropdown-item href="#">View Profile</b-dropdown-item>
         <b-dropdown-item href="#">Setting</b-dropdown-item>
@@ -32,15 +32,25 @@
 
 <script>
 export default {
-  data () {
-    return {
-      user: {
-        photoUrl: 'https://placekitten.com/g/30/30',
-        name: 'lnw Ton'
+  methods: {
+    data () {
+      return {
+        user: {
+          photoUrl: '',
+          name: ''
+        }
       }
+    }
+  },
+  computed: {
+    changeName () {
+      console.log('ton1')
+      return this.$store.getters['Auth/getUserName']
+    },
+    changeUrl () {
+      console.log('ton2')
+      return this.$store.getters['Auth/getUrl']
     }
   }
 }
 </script>
-
-<style></style>

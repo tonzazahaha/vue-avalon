@@ -92,8 +92,8 @@ export default {
         this.$store.dispatch('Auth/register', {
           email: this.form.email,
           password: this.form.password,
-          name: this.form.username,
-          profilePic: this.form.profile
+          username: this.form.username,
+          photoUrl: this.form.profile
         })
           .then(result => {
             alert('Register Success')
