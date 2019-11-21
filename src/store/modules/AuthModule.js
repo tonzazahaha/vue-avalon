@@ -45,9 +45,9 @@ const AuthModule = {
               localStorage.setItem('access_token', res.token)
               dispatch('fetchUser').then(res => {
                 commit('SETUSER', res.userData)
+                console.log('1')
+                resolve(res)
               })
-              console.log('1')
-              resolve(res)
             } else {
               reject(new Error('response fail'))
             }
