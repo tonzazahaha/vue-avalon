@@ -20,17 +20,15 @@ const LobbyModule = {
     }
   },
   actions: {
-    socketFetchRoom ({ commit }, payload) {
-      let item = [
-        { room_id: '0001', room_name: 'room1##', mode: 'nomal', amoung: 7, max: 10 },
-        { room_id: '0002', room_name: '1-1 dai mod kub', mode: 'nomal', amoung: 7, max: 7 }
-      ]
-      commit('SETROOMS', item)
+    socketFetchRoom ({ commit, state }, payload) {
+      state.socket.on('rooms', rooms => {
+        // let oldRooms = [ ...state.rooms ]
+        // oldRooms.push(room)
+        commit('SETROOMS', rooms)
+      })
     },
     createRoom ({ commit, state }, payload) {
-      let oldRoom = [ ...state.rooms ]
-      oldRoom.push(payload)
-      commit('SETROOMS', oldRoom)
+      state.socket.emit('createRoom', payload)
     },
     connectSocket ({ commit, state }, payload) {
       let user = {

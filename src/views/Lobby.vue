@@ -144,7 +144,10 @@ export default {
         return alert('please enter room name')
       } else {
         this.$store.dispatch('Lobby/createRoom', {
-          room_name: this.newRoom.roomName, mode: 'nomal', size: this.newRoom.size
+          roomName: this.newRoom.roomName,
+          roomPassword: this.newRoom.roomPassword,
+          roomMode: 'nomal',
+          roomSize: this.newRoom.roomSize
         })
         this.showModal = false
       }
@@ -157,9 +160,9 @@ export default {
       }
     }
   },
-  created () {
-    this.$store.dispatch('Lobby/connectSocket')
-    this.$store.dispatch('Lobby/socketFetchRoom', null)
+  async created () {
+    await this.$store.dispatch('Lobby/connectSocket')
+    await this.$store.dispatch('Lobby/socketFetchRoom', null)
   },
   computed: {
     roomList () {
