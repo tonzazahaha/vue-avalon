@@ -15,7 +15,8 @@
           <b-img
             :src="changeUrl"
             alt=""
-            width="30"
+            width="40"
+            height="40"
             rounded="circle"
           >
           </b-img>
