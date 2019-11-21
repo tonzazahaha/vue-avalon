@@ -15,8 +15,7 @@
           <b-img
             :src="changeUrl"
             alt=""
-            width="40"
-            height="40"
+            width="30"
             rounded="circle"
           >
           </b-img>
@@ -46,11 +45,11 @@ export default {
   computed: {
     changeName () {
       console.log('ton1')
-      return this.$store.getters['Auth/getUserName']
+      return this.$store.getters['Auth/getUserName'] || ''
     },
     changeUrl () {
       console.log('ton2')
-      return this.$store.getters['Auth/getUrl']
+      return this.$store.getters['Auth/getUrl'] || ''
     }
   }
 }
