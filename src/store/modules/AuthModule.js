@@ -43,11 +43,12 @@ const AuthModule = {
           .then(res => {
             if (res.success) {
               localStorage.setItem('access_token', res.token)
-              dispatch('fetchUser').then(res => {
-                commit('SETUSER', res.userData)
-                console.log('1')
-                resolve(res)
-              })
+              dispatch('fetchUser')
+                .then(({ error }) => {
+                  if (!error) {
+                    resolve()
+                  }
+                })
             } else {
               reject(new Error('response fail'))
             }
@@ -58,21 +59,24 @@ const AuthModule = {
           })
       })
     },
-    fetchUser ({ commit }, payload) {
+    fetchUser ({ commit, dispatch }, payload) {
       return new Promise((resolve, reject) => {
+        if (!localStorage.getItem('access_token')) {
+          return resolve({ error: new Error('No token to authentication') })
+        }
         $api({ path: '/user', method: 'get' })
           .then(res => {
-            console.log(res)
             if (res.success) {
-              console.log('two')
-              resolve(res)
+              commit('SETUSER', res.userData)
+              resolve({ error: null })
             } else {
-              reject(new Error('response fail'))
+              dispatch('logout')
+              resolve({ error: new Error('response fail') })
             }
-            console.log(res)
           })
           .catch(err => {
-            reject(err)
+            dispatch('logout')
+            resolve({ error: err })
           })
       })
     },

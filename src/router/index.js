@@ -67,12 +67,13 @@ router.beforeEach(async (to, from, next) => {
   const requireAuth = to.matched.some(record => record.meta.requireAuth)
   const requireNoAuth = to.matched.some(record => record.meta.requireNoAuth)
 
-  const token = localStorage.getItem('access_token')
+  // const token = localStorage.getItem('access_token')
+  const user = store.getters['Auth/getUser']
 
-  if (requireAuth && !token) {
+  if (requireAuth && !user) {
     store.dispatch('Auth/logout')
     next('/login')
-  } else if (requireNoAuth && token) {
+  } else if (requireNoAuth && user) {
     next('/lobby')
   } else {
     next()

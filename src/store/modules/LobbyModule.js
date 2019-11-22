@@ -30,11 +30,12 @@ const LobbyModule = {
     createRoom ({ commit, state }, payload) {
       state.socket.emit('createRoom', payload)
     },
-    connectSocket ({ commit, state }, payload) {
+    connectSocket ({ commit, state, rootGetters }, payload) {
       let user = {
         username: 'tose',
         userId: '12345'
       }
+      console.log(rootGetters['Auth/getUser'])
       commit('SETSOCKET', io('localhost:3000/lobby', { query: user }))
       // state.socket.emit('enterLobby', { username: 'hello' })
     },
