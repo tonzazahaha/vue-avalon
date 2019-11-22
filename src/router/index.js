@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import store from '../store'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
@@ -17,27 +18,42 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../views/Login.vue'),
+    meta: {
+      requireNoAuth: true
+    }
   },
   {
     path: '/register',
     name: 'register',
-    component: () => import('../views/Register.vue')
+    component: () => import('../views/Register.vue'),
+    meta: {
+      requireNoAuth: true
+    }
   },
   {
     path: '/lobby',
     name: 'lobby',
-    component: () => import('../views/Lobby.vue')
+    component: () => import('../views/Lobby.vue'),
+    meta: {
+      requireAuth: true
+    }
   },
   {
     path: '/room/:roomId',
     name: 'room',
-    component: () => import('../views/Room.vue')
+    component: () => import('../views/Room.vue'),
+    meta: {
+      requireAuth: true
+    }
   },
   {
     path: '/ingame',
     name: 'ingame',
-    component: () => import('../views/Ingame.vue')
+    component: () => import('../views/Ingame.vue'),
+    meta: {
+      requireAuth: true
+    }
   }
 ]
 
@@ -47,4 +63,19 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach(async (to, from, next) => {
+  const requireAuth = to.matched.some(record => record.meta.requireAuth)
+  const requireNoAuth = to.matched.some(record => record.meta.requireNoAuth)
+
+  const token = localStorage.getItem('access_token')
+
+  if (requireAuth && !token) {
+    store.dispatch('Auth/logout')
+    next('/login')
+  } else if (requireNoAuth && token) {
+    next('/lobby')
+  } else {
+    next()
+  }
+})
 export default router
