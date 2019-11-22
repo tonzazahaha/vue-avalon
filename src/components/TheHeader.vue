@@ -1,5 +1,5 @@
 <template>
-  <b-navbar variant="dark" type="dark" class="sticky-top">
+  <b-navbar variant="dark" type="dark" class="sticky-top" >
     <b-navbar-brand to="/" class="ml-2">
       <img
         src="https://placekitten.com/g/30/30"
@@ -13,7 +13,7 @@
       <b-nav-item-dropdown text="Lang" class="mr-2" right>
         <template v-slot:button-content>
           <b-img
-            :src="changeUrl"
+            :src="changeUrl || ''"
             alt=""
             width="30"
             rounded="circle"
@@ -24,7 +24,7 @@
         <b-dropdown-item href="#">View Profile</b-dropdown-item>
         <b-dropdown-item href="#">Setting</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item href="#">Log out</b-dropdown-item>
+        <b-dropdown-item @click="logout">Log out</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
   </b-navbar>
@@ -32,13 +32,11 @@
 
 <script>
 export default {
-  methods: {
-    data () {
-      return {
-        user: {
-          photoUrl: '',
-          name: ''
-        }
+  data () {
+    return {
+      user: {
+        photoUrl: '',
+        name: ''
       }
     }
   },
@@ -50,6 +48,14 @@ export default {
     changeUrl () {
       console.log('ton2')
       return this.$store.getters['Auth/getUrl'] || ''
+    }
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('Auth/logout')
+        .then(() => {
+          this.$router.push('/login')
+        })
     }
   }
 }

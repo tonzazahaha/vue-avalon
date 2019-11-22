@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <the-header v-if="showHeader" />
+    <the-header v-if="showHeader && user" />
     <router-view/>
   </div>
 </template>
@@ -22,6 +22,11 @@ export default {
   watch: {
     '$route.name': function (name) {
       this.showHeader = !(this.pageNotRequiredHeader.indexOf(name) > -1)
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.getters['Auth/getUser']
     }
   }
 }

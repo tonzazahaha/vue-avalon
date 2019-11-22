@@ -10,10 +10,10 @@ const AuthModule = {
       return state.user
     },
     getUserName (state) {
-      return state.user.username
+      return state.user.username || ''
     },
     getUrl (state) {
-      return state.user.photoUrl
+      return state.user.photoUrl || ''
     }
   },
   mutations: {
@@ -74,6 +74,13 @@ const AuthModule = {
           .catch(err => {
             reject(err)
           })
+      })
+    },
+    logout ({ commit }) {
+      return new Promise((resolve, reject) => {
+        commit('SETUSER', null)
+        localStorage.removeItem('access_token')
+        resolve()
       })
     }
   }
