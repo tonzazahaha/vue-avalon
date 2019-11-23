@@ -1,17 +1,17 @@
 <template>
   <div class="room">
     <layout-main>
-      <b-container class="h-100" fluid>
-        <b-row align-v="start" class="p-5 room-detail">
-          <b-col cols="auto" class="ml-0">
+      <layout-room>
+        <template v-slot:room-detail>
+          <b-col cols="auto" align-self="center" class="ml-0">
             <span>Room Name</span>
             <h5>{{ room.roomName }}</h5>
           </b-col>
-          <b-col cols="auto" class="ml-5">
+          <b-col cols="auto" align-self="center" class="ml-5">
             <span>Mode</span>
             <h5>{{ room.mode }}</h5>
           </b-col>
-          <b-col cols="auto" class="ml-5">
+          <b-col cols="auto" align-self="center" class="ml-5">
             <span>Size</span>
             <h5>{{ room.amoung }}/{{ room.max }}</h5>
           </b-col>
@@ -21,24 +21,19 @@
           <b-col align-self="center" cols="auto" class="ml-autox">
             <b-button variant="dark" class="px-5 bg-grey" @click="leaveRoom">Leave</b-button>
           </b-col>
-        </b-row>
-        <b-row align-v="center" class="px-5 py-3 room-member">
-          avatar
-        </b-row>
-        <b-row align-v="end" class="px-5 py-3 room-actions">
-          button
-        </b-row>
-      </b-container>
+        </template>
+      </layout-room>
     </layout-main>
   </div>
 </template>
 
 <script>
 import LayoutMain from '../components/LayoutMain'
+import LayoutRoom from '../components/LayoutRoom'
 
 export default {
   components: {
-    LayoutMain
+    LayoutMain, LayoutRoom
   },
   data () {
     return {

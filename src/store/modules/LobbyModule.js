@@ -20,24 +20,15 @@ const LobbyModule = {
     }
   },
   actions: {
-    socketFetchRoom ({ commit, state }, payload) {
-      state.socket.on('rooms', rooms => {
-        // let oldRooms = [ ...state.rooms ]
-        // oldRooms.push(room)
-        commit('SETROOMS', rooms)
-      })
+    fetchRoom ({ commit }) {
+
     },
-    createRoom ({ commit, state }, payload) {
+    createRoom ({ state }, payload) {
       state.socket.emit('createRoom', payload)
     },
-    connectSocket ({ commit, state, rootGetters }, payload) {
-      let user = {
-        username: 'tose',
-        userId: '12345'
-      }
-      console.log(rootGetters['Auth/getUser'])
+    connectSocket ({ commit, rootGetters }) {
+      let user = rootGetters['Auth/getUser']
       commit('SETSOCKET', io('localhost:3000/lobby', { query: user }))
-      // state.socket.emit('enterLobby', { username: 'hello' })
     },
     disConnectSocket ({ commit, state }, payload) {
       state.socket.disconnect()
