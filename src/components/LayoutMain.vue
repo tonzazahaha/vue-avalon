@@ -23,17 +23,17 @@ export default {
 
 <style>
 .body {
-  max-width: calc(100vw - 345px);
-  min-width: calc(100vw - 345px);
+  max-width: calc(100vw - 300px);
+  min-width: calc(100vw - 300px);
 }
 .sidebar {
   /* display: block; */
   /* position: sticky; */
   height: calc(100vh - 50px);
   top: 60px;
-  left: calc(100vw - 345px);
-  max-width: 345px;
-  min-width: 345px;
+  left: calc(100vw - 300px);
+  max-width: 300px;
+  min-width: 300px;
   word-wrap: break-word;
   z-index: 1000;
 }
