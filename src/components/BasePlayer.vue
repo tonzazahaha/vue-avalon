@@ -1,7 +1,7 @@
 <template>
   <div class="player">
-    <div class="player-image">
-      <img :src="player.photoUrl" class="bg-grey" alt="">
+    <div class="player-image" :class="{'isEmpty': player.username === ''}">
+      <img :src="player.photoUrl" :class="{'bg-grey': player.username !== ''}" alt="">
     </div>
     <div class="player-name">
       {{ cutUsername }}
@@ -41,9 +41,31 @@ export default {
   height: 120px;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.15), -5px -5px 20px rgba(0, 0, 0, 0.15);
 }
+.player .player-image.isEmpty img {
+  background: transparent;
+  box-shadow: none;
+  border: #57627A dashed 2px;
+  position: relative;
+  cursor: pointer;
+  transition: .2s all;
+  color: #57627A;
+}
+.player .player-image.isEmpty img:hover {
+  border-color: #e5e5e594;
+  color: #e5e5e594;
+}
+.player .player-image.isEmpty img::before {
+  content: '+';
+  font-size: 35px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+}
 .player .player-name {
   display: block;
   width: 120px;
+  height: 20px;
   text-align: center;
   color: #e5e5e5;
   word-wrap: break-word;
