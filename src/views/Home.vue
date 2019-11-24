@@ -2,9 +2,9 @@
   <div class="home">
     <b-container class="ava">
         <b-row>
-        <b-col cols="8" class="my-4 mx-auto">
+        <b-col cols="8" class="my-1 mx-auto">
           <img alt="Avalon logo" class="mx-auto" src="../assets/AVALON-red.png">
-          <button type="button" class="btn btn-outline-danger btn-block" onclick="window.location='./login/'">Press to enter</button>
+          <button type="button" class="my-4 btn btn-outline-danger btn-block" onclick="window.location='./login/'">Press to enter</button>
         </b-col>
       </b-row>
   </b-container>
