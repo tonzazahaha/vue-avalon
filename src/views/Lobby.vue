@@ -19,15 +19,15 @@
               hover
               sticky-header="calc(100vh - 149px)"
             >
-              <template v-slot:cell(size)="data">
-                {{ data.item.amoung }}/{{ data.item.max }}
+              <template v-slot:cell(roomSize)="data">
+                {{ data.item.player.length }}/{{ data.item.roomSize }}
               </template>
               <template v-slot:cell()="data">
                 {{ data.value }}
               </template>
               <template v-slot:cell(action)="data">
                 <div class="mr-4">
-                  <b-button size="sm" block variant="danger" @click="joinRoom(data.item.room_id)">Play</b-button>
+                  <b-button size="sm" block variant="danger" @click="joinRoom(data.item._id)">Play</b-button>
                 </div>
               </template>
             </b-table>
@@ -118,10 +118,10 @@ export default {
       ],
       roomTable: {
         fields: [
-          { key: 'room_id', sortable: true },
-          { key: 'room_name', sortable: true },
-          { key: 'mode' },
-          { key: 'size', sortable: true },
+          { key: '_id', sortable: true },
+          { key: 'roomName', sortable: true },
+          { key: 'roomMode' },
+          { key: 'roomSize', sortable: true },
           { key: 'action' }
         ],
         items: []
@@ -162,7 +162,8 @@ export default {
   },
   async created () {
     await this.$store.dispatch('Lobby/connectSocket')
-    await this.$store.dispatch('Lobby/socketFetchRoom', null)
+    await this.$store.dispatch('Lobby/onRooms')
+    await this.$store.dispatch('Lobby/fetchRoom')
   },
   computed: {
     roomList () {
