@@ -1,7 +1,8 @@
 <template>
   <div class="player">
     <div class="player-image" :class="{'isEmpty': player.username === ''}">
-      <img :src="player.photoUrl" :class="{'bg-grey': player.username !== ''}" alt="">
+      <img :src="player.photoUrl" class="photo" :class="{'bg-grey': player.username !== ''}" alt="">
+      <img v-if="isLeader" src="../assets/player-icons/crown.png" class="icon-leader" alt="">
     </div>
     <div class="player-name">
       {{ cutUsername }}
@@ -35,6 +36,18 @@ export default {
 </script>
 
 <style scoped>
+.player .player-image {
+  position: relative;
+}
+.player .player-image img.icon-leader {
+  /* display: block; */
+  position: absolute;
+  transform: scale(.35);
+  top: 50px;
+  left: -40px;
+  box-shadow: none;
+  transition: .3s all;
+}
 .player .player-image img {
   display: block;
   width: 120px;
