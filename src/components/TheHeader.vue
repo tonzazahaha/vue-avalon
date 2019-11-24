@@ -52,10 +52,12 @@ export default {
   },
   methods: {
     logout () {
-      this.$store.dispatch('Auth/logout')
-        .then(() => {
-          this.$router.push('/login')
-        })
+      if (confirm('Are you sure to logout?')) {
+        this.$store.dispatch('Auth/logout')
+          .then(() => {
+            this.$router.push('/login')
+          })
+      }
     }
   }
 }
