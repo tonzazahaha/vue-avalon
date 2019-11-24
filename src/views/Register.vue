@@ -88,22 +88,28 @@ export default {
   },
   methods: {
     onSubmit () {
-      if (this.form.profile !== '') {
-        this.$store.dispatch('Auth/register', {
-          email: this.form.email,
-          password: this.form.password,
-          username: this.form.username,
-          photoUrl: this.form.profile
-        })
-          .then(result => {
-            alert('Register Success')
-            this.$router.push('/login')
+      if (this.form.profile && this.form.email && this.form.username && this.form.password !== '') {
+        if (this.form.email || this.form.username) {
+          alert('Email or Username has exist.')
+        } else if (this.form.password.length < 5) {
+          alert('Password must have at least 5 characters.')
+        } else {
+          this.$store.dispatch('Auth/register', {
+            email: this.form.email,
+            password: this.form.password,
+            username: this.form.username,
+            photoUrl: this.form.profile
           })
-          .catch(err => {
-            console.log(err)
-          })
+            .then(result => {
+              alert('Register Success')
+              this.$router.push('/login')
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        }
       } else {
-        alert('Must be image url')
+        alert('Please fill all forms!')
       }
     },
     isImageUrl (imageUrl) {

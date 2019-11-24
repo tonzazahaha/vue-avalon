@@ -14,6 +14,9 @@ const AuthModule = {
     },
     getUrl (state) {
       return state.user.photoUrl || ''
+    },
+    getEmail (state) {
+      return state.user.email || ''
     }
   },
   mutations: {

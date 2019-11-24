@@ -64,11 +64,10 @@ export default {
         })
           .then(result => {
             alert('Login Success')
-            console.log('3')
             this.$router.push('/lobby')
           })
       } else {
-        alert('Error')
+        alert('Email and Password are not matched.')
       }
     }
   }
