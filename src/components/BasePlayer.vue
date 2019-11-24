@@ -26,10 +26,10 @@ export default {
   },
   computed: {
     cutUsername () {
-      if (this.player.username !== '') {
+      if (this.player.username !== '' && this.player.username.length >= 12) {
         return `${this.player.username.slice(0, 12)}...`
       }
-      return ''
+      return this.player.username
     }
   }
 }
