@@ -16,7 +16,7 @@ export default {
   data () {
     return {
       showHeader: false,
-      pageNotRequiredHeader: ['login', 'register']
+      pageNotRequiredHeader: ['login', 'register', 'home']
     }
   },
   watch: {
