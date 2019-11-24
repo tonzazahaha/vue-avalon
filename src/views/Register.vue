@@ -89,9 +89,10 @@ export default {
   methods: {
     onSubmit () {
       if (this.form.profile && this.form.email && this.form.username && this.form.password !== '') {
-        if (this.form.email || this.form.username) {
-          alert('Email or Username has exist.')
-        } else if (this.form.password.length < 5) {
+        // if (this.form.email || this.form.username) {
+        //   alert('Email or Username has exist.')
+        // } else
+        if (this.form.password.length < 5) {
           alert('Password must have at least 5 characters.')
         } else {
           this.$store.dispatch('Auth/register', {
