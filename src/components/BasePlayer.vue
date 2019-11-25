@@ -14,6 +14,12 @@
 
 <script>
 export default {
+  data () {
+    return {
+      good: false,
+      bad: false
+    }
+  },
   props: {
     player: {
       type: Object,
