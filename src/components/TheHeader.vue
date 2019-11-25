@@ -6,7 +6,11 @@
         class="d-inline-block align-top pr-3"
         alt="Kitten"
       >
-      AVALON
+      <img
+        src="../assets/avalon Header.png"
+        class="d-inline-block align-top pr-3"
+        alt="avalon"
+      >
     </b-navbar-brand>
 
     <b-navbar-nav class="ml-auto">
