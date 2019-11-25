@@ -22,7 +22,7 @@
         </b-row>
         <b-row align-h="center">
           <b-col cols='auto'>
-            <b-button class="mt-3" variant="outline-danger" @click="hideModal">OK</b-button>
+            <b-button class="mt-3" variant="outline-primary" @click="hideModal">OK</b-button>
           </b-col>
         </b-row>
     </b-modal>
@@ -49,7 +49,7 @@
         </b-row>
         <b-row align-h="center">
           <b-col cols='auto'>
-            <b-button class="mt-3" variant="outline-danger" @click="hideModal">OK</b-button>
+            <b-button class="mt-3" variant="outline-primary" @click="hideModal">OK</b-button>
           </b-col>
         </b-row>
     </b-modal>
