@@ -35,8 +35,10 @@
         <!-- room footer -->
         <template v-slot:room-footer>
           <b-col cols="auto" class="mx-auto">
-            <b-button variant="success" class="btn-vote mx-3" @click="showWin = !showWin">Approve</b-button>
-            <b-button variant="danger" class="btn-vote mx-3"  @click="showLose = !showLose">Reject</b-button>
+            <b-button variant="success" class="btn-vote mx-3">Approve</b-button>
+            <b-button variant="danger" class="btn-vote mx-3">Reject</b-button>
+            <b-button variant="success" class="btn-vote mx-3" @click="showWin = !showWin">Win</b-button>
+            <b-button variant="danger" class="btn-vote mx-3"  @click="showLose = !showLose">Lose</b-button>
           </b-col>
         </template>
       </layout-room>
