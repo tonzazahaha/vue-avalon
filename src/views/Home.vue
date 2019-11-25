@@ -1,13 +1,11 @@
 <template>
   <div class="home">
-    <b-container class="ava">
-        <b-row class="">
-        <b-col cols="auto" class="my-1 mx-auto" align-self="center">
-          <img alt="Avalon logo" class="mx-auto" src="../assets/AVALON-red.png">
-          <button type="button" class="my-4 btn btn-outline-danger btn-block" onclick="window.location='./login/'">Press to enter</button>
-        </b-col>
-      </b-row>
-  </b-container>
+    <div class="ava">
+      <div class="my-1 mx-auto">
+        <img alt="Avalon logo" class="mx-auto" src="../assets/AVALON-red.png">
+        <button type="button" class="my-4 btn btn-outline-danger btn-block" @click="$router.push('/login')">Press to enter</button>
+      </div>
+  </div>
   </div>
 </template>
 
@@ -20,5 +18,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.ava {
+  position: absolute;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+
+}
 </style>
