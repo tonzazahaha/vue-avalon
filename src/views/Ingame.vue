@@ -1,39 +1,64 @@
 <template>
-  <div class="ingame">
-    <b-container fluid>
-      <b-row class="flex-xl-nowrap">
-        <b-col>
-          room name
-        </b-col>
-        <b-col cols="4" class="sidebar bg-dark px-0">
-          <the-sidebar />
-        </b-col>
-      </b-row>
-    </b-container>
+  <div class="room">
+    <layout-main>
+      <layout-room>
+        <!-- game phase -->
+        <template v-slot:room-wrapper>
+          <wrapper-room-player :players="players" :leader="leader"></wrapper-room-player>
+        </template>
+        <!-- room wrapper -->
+        <template v-slot:room-wrapper>
+          <wrapper-room-player :players="players" :leader="leader"></wrapper-room-player>
+        </template>
+        <!-- room footer -->
+        <template v-slot:room-footer>
+          <b-col cols="auto" class="mx-auto">
+            <b-button variant="success" class="btn-vote mx-3">Approve</b-button>
+            <b-button variant="danger" class="btn-vote mx-3">Reject</b-button>
+          </b-col>
+        </template>
+      </layout-room>
+    </layout-main>
   </div>
 </template>
 
 <script>
-import TheSidebar from '../components/TheSidebar'
+import LayoutMain from '../components/LayoutMain'
+import LayoutRoom from '../components/LayoutRoom'
+import WrapperRoomPlayer from '../components/WrapperRoomPlayer'
 
 export default {
+  components: {
+    LayoutMain, LayoutRoom, WrapperRoomPlayer
+  },
   data () {
     return {
+      game: {
+        time: '0'
+      }
     }
   },
-  components: {
-    TheSidebar
+  methods: {
+    leaveRoom () {
+      this.$router.push('/lobby')
+    }
   }
 }
 </script>
 
-<style scoped>
-.sidebar {
-  /* display: block; */
-  position: sticky;
-  height: calc(100vh - 62px);
-  max-width: 345px;
-  min-width: 345px;
-  word-wrap:break-word;
+<style>
+.room-detail {
+  color: white;
+}
+.room-detail span {
+  color: #e5e5e5;
+  opacity: .7;
+}
+.btn-vote {
+  width: 130px;
+  padding: 7px 0;
+}
+.game-phase {
+  color: white;
 }
 </style>

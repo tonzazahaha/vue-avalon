@@ -3,6 +3,8 @@
     <div class="player-image" :class="{'isEmpty': player.username === ''}">
       <img :src="player.photoUrl" class="photo" :class="{'bg-grey': player.username !== ''}" alt="">
       <img v-if="isLeader" src="../assets/player-icons/crown.png" class="icon-leader" alt="">
+      <img v-if="good">
+      <img v-if="bad">
     </div>
     <div class="player-name">
       {{ cutUsername }}

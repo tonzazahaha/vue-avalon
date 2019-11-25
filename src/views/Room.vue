@@ -30,9 +30,7 @@
         <!-- room footer -->
         <template v-slot:room-footer>
           <b-col cols="auto" class="mx-auto">
-            <b-button variant="danger" class="btn-vote mx-3">START</b-button>
-            <!-- <b-button variant="success" class="btn-vote mx-3">Approve</b-button>
-            <b-button variant="danger" class="btn-vote mx-3">Reject</b-button> -->
+            <b-button variant="danger" class="btn-vote mx-3" @click="ingame">START</b-button>
           </b-col>
         </template>
       </layout-room>
@@ -52,7 +50,7 @@ export default {
   data () {
     return {
       room: {
-        roomName: 'ROOM ##',
+        roomName: 'ROOM 0001',
         mode: 'nomal',
         amoung: 7,
         max: 10
@@ -68,6 +66,9 @@ export default {
   methods: {
     leaveRoom () {
       this.$router.push('/lobby')
+    },
+    ingame () {
+      this.$router.push('/ingame')
     }
   }
 }
