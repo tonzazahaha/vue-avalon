@@ -3,6 +3,28 @@
     <layout-main>
       <layout-room>
         <!-- game phase -->
+        <template v-slot:room-detail>
+          <b-col cols="2" class="ml-2">
+            <h1 class="display-3">10s</h1>
+          </b-col>
+          <b-col cols="auto" class="ml-5">
+            <img alt="Round 1" src="../assets/player-icons/stage1white.png">
+            <h1 class="centered-text">3</h1>
+          </b-col>
+          <b-col cols="auto" class="ml-1 img-text">
+            <img alt="Round 2" src="../assets/player-icons/stage1white.png">
+            <h1 class="centered-text">3</h1>
+          </b-col>
+          <b-col cols="auto" class="ml-1">
+            <img alt="Round 3" src="../assets/player-icons/stage1white.png">
+          </b-col>
+          <b-col cols="auto" class="ml-1">
+            <img alt="Round 4" src="../assets/player-icons/stage1white.png">
+          </b-col>
+          <b-col cols="auto" class="ml-1">
+            <img alt="Round 5" src="../assets/player-icons/stage1white.png">
+          </b-col>
+        </template>
         <template v-slot:room-wrapper>
           <wrapper-room-player :players="players" :leader="leader"></wrapper-room-player>
         </template>
@@ -117,5 +139,16 @@ export default {
 }
 .game-phase {
   color: white;
+}
+.img-text {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.centered-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
