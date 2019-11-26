@@ -4,7 +4,7 @@
       <h1 class="display-3">{{ game.time }}s</h1>
     </b-col>
     <b-col cols="auto" class="mx-3 mt-3" v-for="(circle, index) in game.mission" :key="index">
-      <template v-if="currentMission === index">
+      <template v-if="game.currentMission === index">
         <img alt="Round 1" src="../assets/player-icons/stage4blue.png" />
         <h1 class="centered-text">{{circle.text}}</h1>
       </template>
@@ -42,19 +42,24 @@
 <script>
 
 export default {
-  data () {
-    return {
-      game: {
-        time: '10',
-        rejectCount: 2,
-        mission: [
-          { round: '1', text: '3', result: 0 },
-          { round: '2', text: '3', result: -1 },
-          { round: '3', text: '3', result: -1 },
-          { round: '4', text: '3', result: -1 },
-          { round: '5', text: '4', result: -1 }
-        ],
-        currentMission: 0
+  props: {
+    game: {
+      type: Object,
+      default: function () {
+        return {
+          game: {
+            time: '10',
+            rejectCount: 2,
+            mission: [
+              { round: '1', text: '3', result: 0 },
+              { round: '2', text: '3', result: -1 },
+              { round: '3', text: '3', result: -1 },
+              { round: '4', text: '3', result: -1 },
+              { round: '5', text: '4', result: -1 }
+            ],
+            currentMission: 0
+          }
+        }
       }
     }
   }

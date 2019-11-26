@@ -4,7 +4,7 @@
       <layout-room>
         <!-- game phase -->
         <template v-slot:room-detail>
-          <game-header></game-header>
+          <game-header :game="room.game"></game-header>
         </template>
         <template v-slot:room-wrapper>
           <wrapper-room-player :players="players" :leader="leader"></wrapper-room-player>

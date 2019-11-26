@@ -4,8 +4,8 @@
       <layout-room v-if="room">
         <!-- room detail -->
         <template v-slot:room-detail>
-          <room-header :roomName="room.roomName" :roomMode="room.roomMode" :players="room.players" :roomSize="room.roomSize" v-if="phase == 0"></room-header>
-          <game-header :game="game" v-else></game-header>
+          <room-header :roomName="room.roomName" :roomMode="room.roomMode" :players="room.players" :roomSize="room.roomSize" v-if="phase === 0"></room-header>
+          <game-header :game="room.game" v-else></game-header>
         </template>
         <!-- room wrapper -->
         <template v-slot:room-wrapper>
@@ -13,20 +13,13 @@
         </template>
         <!-- room footer -->
         <template v-slot:room-footer>
-<<<<<<< HEAD
-          <div v-if="phase == 0" class="mx-auto">
-            <b-col cols="auto" class="mx-auto">
-              <b-button variant="danger" class="btn-vote mx-3" @click="phase = 1">START</b-button>
-            </b-col>
-          </div>
-=======
           <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && currentIsHead">
             <b-button variant="danger" class="btn-vote mx-3" @click="ingame">START</b-button>
           </b-col>
           <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && !currentIsHead">
             <h3 class="text-grey">Waiting for head's room start...</h3>
           </b-col>
->>>>>>> 42c0848b696d41f1745891da78094a6c4cc4d533
+          <game-footer :phase="room.phase" v-if="phase !== 0"></game-footer>
         </template>
       </layout-room>
     </layout-main>
@@ -39,10 +32,11 @@ import LayoutRoom from '../components/LayoutRoom'
 import WrapperRoomPlayer from '../components/WrapperRoomPlayer'
 import RoomHeader from '../components/RoomHeader'
 import GameHeader from '../components/GameHeader'
+import GameFooter from '../components/GameFooter'
 
 export default {
   components: {
-    LayoutMain, LayoutRoom, WrapperRoomPlayer, RoomHeader, GameHeader
+    LayoutMain, LayoutRoom, WrapperRoomPlayer, RoomHeader, GameHeader, GameFooter
   },
   data () {
     return {
@@ -77,7 +71,7 @@ export default {
       this.$store.dispatch('Room/leaveRoom', { id: this.$route.params.roomId })
     },
     ingame () {
-      // this.$router.push('/ingame')
+      this.$router.push('/ingame')
     }
   },
   computed: {
