@@ -53,7 +53,7 @@ export default {
         { id: '1', username: 'My name is so long', photoUrl: 'https://www.reactiongifs.com/wp-content/uploads/2013/07/running.gif', role: 'bad' },
         { id: '2', username: 'Meow', photoUrl: 'https://66.media.tumblr.com/tumblr_lt7bswjhFd1r4ghkoo1_250.gifv' },
         { id: '3', username: 'Minion', photoUrl: 'https://media3.giphy.com/media/1yYWGu3caE3m0/giphy.gif?cid=790b7611ec9b9bf971bbeffcc0ec7c276e0ca7064fcd0cde&rid=giphy.gif' },
-        { id: '4', username: 'Satchan', photoUrl: 'https://media1.tenor.com/images/2bc6b4061aa554241e93c90ea7c62a45/tenor.gif?itemid=12499712https://media1.tenor.com/images/2bc6b4061aa554241e93c90ea7c62a45/tenor.gif?itemid=12499712', role: 'angel' }
+        { id: '4', username: 'Satchan', photoUrl: 'https://media1.tenor.com/images/2bc6b4061aa554241e93c90ea7c62a45/tenor.gif?itemid=12499712https://media1.tenor.com/images/2bc6b4061aa554241e93c90ea7c62a45/tenor.gif?itemid=12499712' }
       ],
       leader: '1',
       loading: false
