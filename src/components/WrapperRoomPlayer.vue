@@ -27,7 +27,7 @@ export default {
       type: Array,
       default: function () {
         return [
-          { id: '00', photoUrl: '', username: '' }
+          { id: '00', photoURL: '', displayName: '' }
         ]
       }
     },
@@ -40,7 +40,7 @@ export default {
     fillPlayers () {
       const temp = [ ...this.players ]
       while (temp.length < 10) {
-        temp.push({ id: '', photoUrl: '', username: '' })
+        temp.push({ id: '', photoURL: '', displayName: '' })
       }
       return temp
     }

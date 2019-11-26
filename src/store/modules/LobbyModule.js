@@ -1,3 +1,4 @@
+import objToArr from '../../services/objToArr'
 const firebase = require('../../services/firebaseConfig')
 
 const LobbyModule = {
@@ -24,7 +25,8 @@ const LobbyModule = {
         var temp = []
         snapshot.forEach(room => {
           var tempRoom = { ...room.val() }
-          tempRoom['id'] = room.key
+          tempRoom.id = room.key
+          tempRoom.players = objToArr(tempRoom.players)
           temp.push(tempRoom)
         })
         commit('SETROOMS', temp)

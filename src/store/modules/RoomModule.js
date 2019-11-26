@@ -19,15 +19,27 @@ const RoomModule = {
     }
   },
   actions: {
-    joinRoom ({ dispatch, commit }, payload) {
+    joinRoom ({ dispatch, commit, rootGetters }, payload) {
       // init socket
-      firebase.db.ref('rooms').child(payload.id).on('value', snapshot => {
+      return firebase.db.ref('rooms').child(payload.id).once('value', snapshot => {
         if (snapshot.exists()) {
           if (snapshot.val().roomPassword === payload.password) {
             const temp = { ...snapshot.val() }
             temp.players = objToArr(temp.players)
+            const currentUser = rootGetters['Auth/getUser']
+            const playerIndex = temp.players.findIndex(p => p.id === currentUser.uid)
+            if (playerIndex <= -1) {
+              // if player not exist in room
+              firebase.db.ref('rooms/' + payload.id + '/players').child(currentUser.uid).set({
+                displayName: currentUser.displayName,
+                photoURL: currentUser.photoURL,
+                role: 'good',
+                leader: false
+              })
+            }
             commit('SETROOM', temp)
             alert('join room')
+            dispatch('onRoomChange', payload)
           } else {
             alert('password wrong')
           }
@@ -36,6 +48,17 @@ const RoomModule = {
           router.push('/lobby')
         }
       })
+    },
+    onRoomChange ({ commit }, payload) {
+      firebase.db.ref('rooms').child(payload.id).on('value', snapshot => {
+        const temp = { ...snapshot.val() }
+        temp.players = objToArr(temp.players)
+        commit('SETROOM', temp)
+      })
+    },
+    leaveRoom ({ commit, rootGetters }, payload) {
+      const currentUser = rootGetters['Auth/getUser']
+      firebase.db.ref('rooms/' + payload.id + '/players').child(currentUser.uid).set(null)
     }
   }
 }

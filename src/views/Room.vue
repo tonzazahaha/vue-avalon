@@ -14,7 +14,7 @@
           </b-col>
           <b-col cols="auto" align-self="center" class="ml-5">
             <span>Size</span>
-            <h5>{{ room.roomSize }}</h5>
+            <h5>{{ room.players.length }}/{{ room.roomSize }}</h5>
           </b-col>
           <b-col align-self="center" cols="auto" class="ml-auto">
             <h5><em class="material-icons pr-2">build</em> Setting</h5>
@@ -25,7 +25,7 @@
         </template>
         <!-- room wrapper -->
         <template v-slot:room-wrapper>
-          <wrapper-room-player :players="players" :leader="leader"></wrapper-room-player>
+          <wrapper-room-player :players="room.players" :leader="leader"></wrapper-room-player>
         </template>
         <!-- room footer -->
         <template v-slot:room-footer>
@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     leaveRoom () {
+      this.$store.dispatch('Room/leaveRoom', { id: this.$route.params.roomId })
       this.$router.push('/lobby')
     },
     ingame () {

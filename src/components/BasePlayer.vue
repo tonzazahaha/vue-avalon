@@ -1,15 +1,15 @@
 <template>
   <div class="player">
-    <div class="player-image" :class="{'isEmpty': player.username === ''}">
+    <div class="player-image" :class="{'isEmpty': player.displayName === ''}">
       <div v-if="player.role == 'bad'" class="player-image" :class="{'player-bad': player.role === 'bad'}">
-        <img :src="player.photoUrl" class="player-image" :class="{'bg-grey': player.username !== ''}" alt="">
+        <img :src="player.photoURL" class="player-image" :class="{'bg-grey': player.displayName !== ''}" alt="">
       </div>
-      <div v-else-if="player.username == 'SatchanBNK48'" class="player-image" :class="{'player-cute': player.username === 'SatchanBNK48'}">
-        <img :src="player.photoUrl" class="player-image" :class="{'bg-grey': player.username !== ''}" alt="">
+      <div v-else-if="player.displayName == 'SatchanBNK48'" class="player-image" :class="{'player-cute': player.displayName === 'SatchanBNK48'}">
+        <img :src="player.photoURL" class="player-image" :class="{'bg-grey': player.displayName !== ''}" alt="">
       </div>
-      <img :src="player.photoUrl" class="player-image" :class="{'bg-grey': player.username !== ''}" alt="" v-else>
+      <img :src="player.photoURL" class="player-image" :class="{'bg-grey': player.displayName !== ''}" alt="" v-else>
       <img v-if="isLeader" src="../assets/player-icons/crown.png" class="icon-leader" alt="">
-      <img v-if="player.username == 'SatchanBNK48'" src="../assets/saturn.png" class="icon-leader" alt="">
+      <img v-if="player.displayName == 'SatchanBNK48'" src="../assets/saturn.png" class="icon-leader" alt="">
     </div>
     <div class="player-name">
       {{ cutUsername }}
@@ -27,7 +27,7 @@ export default {
     player: {
       type: Object,
       default: function () {
-        return { photoUrl: '', username: '', role: 'good' }
+        return { photoUrl: '', displayName: '', role: 'good' }
       }
     },
     isLeader: {
@@ -37,10 +37,10 @@ export default {
   },
   computed: {
     cutUsername () {
-      if (this.player.username !== '' && this.player.username.length >= 12) {
-        return `${this.player.username.slice(0, 12)}...`
+      if (this.player.displayName !== '' && this.player.displayName.length >= 12) {
+        return `${this.player.displayName.slice(0, 12)}...`
       }
-      return this.player.username
+      return this.player.displayName
     }
   }
 }

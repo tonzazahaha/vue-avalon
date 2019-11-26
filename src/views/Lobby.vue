@@ -20,7 +20,7 @@
               sticky-header="calc(100vh - 149px)"
             >
               <template v-slot:cell(roomSize)="data">
-                {{ data.item.roomSize }}
+                {{ data.item.players.length }}/{{ data.item.roomSize }}
               </template>
               <template v-slot:cell()="data">
                 {{ data.value }}
