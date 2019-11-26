@@ -39,7 +39,7 @@ export default {
         time: '10'
       },
       rejectCount: 2,
-      circles: [
+      mission: [
         { round: '1', text: '3', result: 0 },
         { round: '2', text: '3', result: -1 },
         { round: '3', text: '3', result: -1 },
