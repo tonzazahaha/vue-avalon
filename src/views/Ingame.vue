@@ -4,25 +4,41 @@
       <layout-room>
         <!-- game phase -->
         <template v-slot:room-detail>
-          <b-col cols="2" class="ml-2">
-            <h1 class="display-3">10s</h1>
+          <b-col cols="2" class="mx-auto">
+            <h1 class="display-3">{{ game.time }}s</h1>
           </b-col>
-          <b-col cols="auto" class="ml-5">
-            <img alt="Round 1" src="../assets/player-icons/stage1white.png">
-            <h1 class="centered-text">3</h1>
+          <b-col cols="auto" class="mx-3 my-3" v-for="(circle, index) in circles" :key="index">
+            <template v-if="currentMission === index">
+              <img alt="Round 1" src="../assets/player-icons/stage4blue.png" />
+              <h1 class="centered-text">{{circle.text}}</h1>
+            </template>
+            <template v-else-if="circle.result  === -1">
+              <img alt="Round 2" src="../assets/player-icons/stage1white.png" />
+              <h1 class="centered-text">{{circle.text}}</h1>
+            </template>
+            <template v-else-if="circle.result === 0">
+              <img alt="Round 2" src="../assets/player-icons/stage2red.png" />
+              <h1 class="centered-text">{{circle.text}}</h1>
+            </template>
+            <template v-else-if="circle.result === 1">
+              <img alt="Round 2" src="../assets/player-icons/stage3green.png" />
+              <h1 class="centered-text">{{circle.text}}</h1>
+            </template>
           </b-col>
-          <b-col cols="auto" class="ml-1 img-text">
-            <img alt="Round 2" src="../assets/player-icons/stage1white.png">
-            <h1 class="centered-text">3</h1>
-          </b-col>
-          <b-col cols="auto" class="ml-1">
-            <img alt="Round 3" src="../assets/player-icons/stage1white.png">
-          </b-col>
-          <b-col cols="auto" class="ml-1">
-            <img alt="Round 4" src="../assets/player-icons/stage1white.png">
-          </b-col>
-          <b-col cols="auto" class="ml-1">
-            <img alt="Round 5" src="../assets/player-icons/stage1white.png">
+          <b-col class="mx-auto">
+            <b-row class="mx-auto mt-3">
+                  <h3 class="mx-auto">Reject Count</h3>
+            </b-row>
+            <b-row class="mx-auto">
+                <div cols="auto" class="mx-auto">
+                  <img src="../assets/player-icons/image 5fire.png" class="resize mr-3" v-if="rejectCount >= 1">
+                  <img src="../assets/player-icons/circle.png" class="resize mr-3" v-else>
+                  <img src="../assets/player-icons/image 5fire.png" class="resize mx-auto" v-if="rejectCount >= 2">
+                  <img src="../assets/player-icons/circle.png" class="resize mx-auto" v-else>
+                  <img src="../assets/player-icons/image 5fire.png" class="resize ml-3" v-if="rejectCount >= 3">
+                  <img src="../assets/player-icons/circle.png" class="resize ml-3" v-else>
+                </div>
+            </b-row>
           </b-col>
         </template>
         <template v-slot:room-wrapper>
@@ -35,66 +51,12 @@
         <!-- room footer -->
         <template v-slot:room-footer>
           <b-col cols="auto" class="mx-auto">
-            <b-button variant="success" class="btn-vote mx-3">Approve</b-button>
+            <b-button variant="success" class="btn-vote mx-3" @click="currentMission += 1">Approve</b-button>
             <b-button variant="danger" class="btn-vote mx-3">Reject</b-button>
-            <b-button variant="success" class="btn-vote mx-3" @click="showWin = !showWin">Win</b-button>
-            <b-button variant="danger" class="btn-vote mx-3"  @click="showLose = !showLose">Lose</b-button>
           </b-col>
         </template>
       </layout-room>
     </layout-main>
-<!-- win -->
-    <b-modal
-      centered
-      ref="my-modal"
-      v-model="showWin"
-      header-bg-variant="secondary"
-      header-border-variant="secondary"
-      body-bg-variant="secondary"
-      footer-bg-variant="secondary"
-      footer-border-variant="secondary"
-      hide-footer title= "Using Component Methods"
-    >
-      <template v-slot:modal-header class="mx-auto">
-        <h5 class="mx-auto">YOU WIN!</h5>
-      </template>
-        <b-row align-h="center">
-          <b-col cols='auto'>
-            <img src="../assets/win.png" alt="win">
-          </b-col>
-        </b-row>
-        <b-row align-h="center">
-          <b-col cols='auto'>
-            <b-button class="mt-3" variant="outline-primary" @click="hideModal">OK</b-button>
-          </b-col>
-        </b-row>
-    </b-modal>
-<!-- lose -->
-    <b-modal
-      centered
-      ref="my-modal"
-      v-model="showLose"
-      header-bg-variant="secondary"
-      header-border-variant="secondary"
-      body-bg-variant="secondary"
-      footer-bg-variant="secondary"
-      footer-border-variant="secondary"
-      hide-footer title= "Using Component Methods"
-    >
-      <template v-slot:modal-header class="mx-auto">
-        <h5 class="mx-auto">YOU LOSE!</h5>
-      </template>
-      <b-row align-h="center">
-          <b-col cols='auto'>
-            <img src="../assets/lose.png" alt="lose">
-          </b-col>
-        </b-row>
-        <b-row align-h="center">
-          <b-col cols='auto'>
-            <b-button class="mt-3" variant="outline-primary" @click="hideModal">OK</b-button>
-          </b-col>
-        </b-row>
-    </b-modal>
   </div>
 </template>
 
@@ -109,19 +71,23 @@ export default {
   },
   data () {
     return {
-      showWin: false,
-      showLose: false,
       game: {
-        time: '0'
-      }
+        time: '10'
+      },
+      rejectCount: 2,
+      circles: [
+        { round: '1', text: '3', result: 0 },
+        { round: '2', text: '3', result: -1 },
+        { round: '3', text: '3', result: -1 },
+        { round: '4', text: '3', result: -1 },
+        { round: '5', text: '4', result: -1 }
+      ],
+      currentMission: 0
     }
   },
   methods: {
     leaveRoom () {
       this.$router.push('/lobby')
-    },
-    hideModal () {
-      this.$refs['my-modal'].hide()
     }
   }
 }
@@ -152,5 +118,9 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+img.resize {
+  width: 30px;
+  height: 30px;
 }
 </style>
