@@ -4,26 +4,41 @@
       <layout-room>
         <!-- game phase -->
         <template v-slot:room-detail>
-          <b-col cols="2" class="ml-2">
-            <h1 class="display-3">10s</h1>
+          <b-col cols="2" class="mx-auto">
+            <h1 class="display-3">{{ game.time }}s</h1>
           </b-col>
-          <b-col cols="auto" class="mx-auto my-3" v-for="(circle, index) in circles" :key="index">
+          <b-col cols="auto" class="mx-3 my-3" v-for="(circle, index) in circles" :key="index">
             <template v-if="currentMission === index">
               <img alt="Round 1" src="../assets/player-icons/stage4blue.png" />
-              <h1 class="centered-text">{{text}}</h1>
+              <h1 class="centered-text">{{circle.text}}</h1>
             </template>
             <template v-else-if="circle.result  === -1">
               <img alt="Round 2" src="../assets/player-icons/stage1white.png" />
-              <h1 class="centered-text">{{text}}</h1>
+              <h1 class="centered-text">{{circle.text}}</h1>
             </template>
             <template v-else-if="circle.result === 0">
               <img alt="Round 2" src="../assets/player-icons/stage2red.png" />
-              <h1 class="centered-text">{{text}}</h1>
+              <h1 class="centered-text">{{circle.text}}</h1>
             </template>
             <template v-else-if="circle.result === 1">
               <img alt="Round 2" src="../assets/player-icons/stage3green.png" />
-              <h1 class="centered-text">{{text}}</h1>
+              <h1 class="centered-text">{{circle.text}}</h1>
             </template>
+          </b-col>
+          <b-col class="mx-auto">
+            <b-row class="mx-auto mt-3">
+                  <h3 class="mx-auto">Reject Count</h3>
+            </b-row>
+            <b-row class="mx-auto">
+                <div cols="auto" class="mx-auto">
+                  <img src="../assets/player-icons/image 5fire.png" class="resize mr-3" v-if="rejectCount >= 1">
+                  <img src="../assets/player-icons/circle.png" class="resize mr-3" v-else>
+                  <img src="../assets/player-icons/image 5fire.png" class="resize mx-auto" v-if="rejectCount >= 2">
+                  <img src="../assets/player-icons/circle.png" class="resize mx-auto" v-else>
+                  <img src="../assets/player-icons/image 5fire.png" class="resize ml-3" v-if="rejectCount >= 3">
+                  <img src="../assets/player-icons/circle.png" class="resize ml-3" v-else>
+                </div>
+            </b-row>
           </b-col>
         </template>
         <template v-slot:room-wrapper>
@@ -57,30 +72,22 @@ export default {
   data () {
     return {
       game: {
-        time: '0'
+        time: '10'
       },
+      rejectCount: 2,
       circles: [
         { round: '1', text: '3', result: 0 },
-        { round: '2', text: '3', result: 1 },
+        { round: '2', text: '3', result: -1 },
         { round: '3', text: '3', result: -1 },
         { round: '4', text: '3', result: -1 },
         { round: '5', text: '4', result: -1 }
       ],
-      currentMission: 2
+      currentMission: 0
     }
   },
   methods: {
     leaveRoom () {
       this.$router.push('/lobby')
-    }
-  },
-  computed: {
-    changeCircle () {
-      const temp = [ ...this.circle ]
-      while (temp.length < 5) {
-        temp.push({ id: '', photoUrl: '', username: '' })
-      }
-      return temp
     }
   }
 }
@@ -92,7 +99,7 @@ export default {
 }
 .room-detail span {
   color: #e5e5e5;
-  opacity: 0.7;
+  opacity: .7;
 }
 .btn-vote {
   width: 130px;
@@ -111,5 +118,9 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+img.resize {
+  width: 30px;
+  height: 30px;
 }
 </style>
