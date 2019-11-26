@@ -1,10 +1,15 @@
 <template>
   <div class="player">
     <div class="player-image" :class="{'isEmpty': player.username === ''}">
-      <img :src="player.photoUrl" class="photo" :class="{'bg-grey': player.username !== ''}" alt="">
+      <div v-if="player.role == 'bad'" class="player-image" :class="{'player-bad': player.role === 'bad'}">
+        <img :src="player.photoUrl" class="player-image" :class="{'bg-grey': player.username !== ''}" alt="">
+      </div>
+      <div v-else-if="player.role == 'angel'" class="player-image" :class="{'player-cute': player.role === 'angel'}">
+        <img :src="player.photoUrl" class="player-image" :class="{'bg-grey': player.username !== ''}" alt="">
+      </div>
+      <img :src="player.photoUrl" class="player-image" :class="{'bg-grey': player.username !== ''}" alt="" v-else>
       <img v-if="isLeader" src="../assets/player-icons/crown.png" class="icon-leader" alt="">
-      <img v-if="good">
-      <img v-if="bad">
+      <img v-if="player.role == 'angel'" src="../assets/saturn.png" class="icon-leader" alt="">
     </div>
     <div class="player-name">
       {{ cutUsername }}
@@ -16,15 +21,13 @@
 export default {
   data () {
     return {
-      good: false,
-      bad: false
     }
   },
   props: {
     player: {
       type: Object,
       default: function () {
-        return { photoUrl: '', username: '' }
+        return { photoUrl: '', username: '', role: 'good' }
       }
     },
     isLeader: {
@@ -62,6 +65,15 @@ export default {
   height: 120px;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.15), -5px -5px 20px rgba(0, 0, 0, 0.15);
 }
+
+.player .player-image .player-bad img {
+  border: 5px solid red;
+}
+
+.player .player-image .player-cute img {
+  border: 5px solid pink;
+}
+
 .player .player-image.isEmpty img {
   background: transparent;
   box-shadow: none;
