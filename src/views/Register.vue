@@ -101,7 +101,7 @@ export default {
             username: this.form.username,
             photoUrl: this.form.profile
           })
-            .then(result => {
+            .then(() => {
               alert('Register Success')
               this.$router.push('/login')
             })

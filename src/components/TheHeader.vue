@@ -52,6 +52,7 @@ export default {
     },
     changeUrl () {
       console.log('ton2')
+      console.log(this.$store.getters['Auth/getUrl'])
       return this.$store.getters['Auth/getUrl'] || ''
     }
   },

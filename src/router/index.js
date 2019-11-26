@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import store from '../store'
 import VueRouter from 'vue-router'
+const firebase = require('../services/firebaseConfig')
 
 Vue.use(VueRouter)
 
@@ -68,7 +69,7 @@ router.beforeEach(async (to, from, next) => {
   const requireNoAuth = to.matched.some(record => record.meta.requireNoAuth)
 
   // const token = localStorage.getItem('access_token')
-  const user = store.getters['Auth/getUser']
+  const user = firebase.auth.currentUser
 
   if (requireAuth && !user) {
     store.dispatch('Auth/logout')

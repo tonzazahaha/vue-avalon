@@ -1,4 +1,5 @@
 import { $api } from '@/services/api'
+const firebase = require('../../services/firebaseConfig')
 
 const AuthModule = {
   namespaced: true,
@@ -10,10 +11,10 @@ const AuthModule = {
       return state.user
     },
     getUserName (state) {
-      return state.user.username || ''
+      return state.user.displayName || ''
     },
     getUrl (state) {
-      return state.user.photoUrl || ''
+      return state.user.photoURL || ''
     },
     getEmail (state) {
       return state.user.email || ''
@@ -26,41 +27,33 @@ const AuthModule = {
   },
   actions: {
     register ({ commit }, payload) {
-      return new Promise((resolve, reject) => {
-        $api({ path: '/register', method: 'post', data: payload })
-          .then(resp => {
-            if (resp.success) {
-              resolve(resp)
-            } else {
-              reject(new Error('response fail'))
-            }
+      firebase.auth.createUserWithEmailAndPassword(payload.email, payload.password)
+        .then(data => {
+          data.user.updateProfile({
+            displayName: payload.username,
+            photoURL: payload.photoUrl
           })
-          .catch(err => {
-            reject(err)
-          })
-      })
+            .then(() => {
+              Promise.resolve()
+            })
+            .catch(err => {
+              Promise.reject(err)
+            })
+        })
+        .catch(err => {
+          Promise.reject(err)
+        })
     },
     login ({ commit, dispatch }, payload) {
-      return new Promise((resolve, reject) => {
-        $api({ path: '/login', method: 'post', data: payload })
-          .then(res => {
-            if (res.success) {
-              localStorage.setItem('access_token', res.token)
-              dispatch('fetchUser')
-                .then(({ error }) => {
-                  if (!error) {
-                    resolve()
-                  }
-                })
-            } else {
-              reject(new Error('response fail'))
-            }
-            console.log(res)
-          })
-          .catch(err => {
-            reject(err)
-          })
-      })
+      firebase.auth.signInWithEmailAndPassword(payload.email, payload.password)
+        .then(data => {
+          commit('SETUSER', data.user)
+          console.log(data)
+          Promise.resolve()
+        })
+        .catch(err => {
+          Promise.reject(err)
+        })
     },
     fetchUser ({ commit, dispatch }, payload) {
       return new Promise((resolve, reject) => {

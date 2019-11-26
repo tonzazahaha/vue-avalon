@@ -62,7 +62,7 @@ export default {
           email: this.form.email,
           password: this.form.password
         })
-          .then(result => {
+          .then(() => {
             alert('Login Success')
             this.$router.push('/lobby')
           })
