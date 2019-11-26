@@ -1,4 +1,5 @@
 import { $api } from '@/services/api'
+import router from '../../router'
 const firebase = require('../../services/firebaseConfig')
 
 const AuthModule = {
@@ -44,12 +45,15 @@ const AuthModule = {
           Promise.reject(err)
         })
     },
+    async autoLogin ({ commit }, payload) {
+      await commit('SETUSER', payload)
+    },
     login ({ commit, dispatch }, payload) {
       firebase.auth.signInWithEmailAndPassword(payload.email, payload.password)
         .then(data => {
           commit('SETUSER', data.user)
-          console.log(data)
-          Promise.resolve()
+          router.push('/lobby')
+          Promise.resolve(data)
         })
         .catch(err => {
           Promise.reject(err)
@@ -77,11 +81,14 @@ const AuthModule = {
       })
     },
     logout ({ commit }) {
-      return new Promise((resolve, reject) => {
-        commit('SETUSER', null)
-        localStorage.removeItem('access_token')
-        resolve()
-      })
+      firebase.auth.signOut()
+        .then(() => {
+          commit('SETUSER', null)
+          Promise.resolve()
+        })
+        .catch(err => {
+          Promise.reject(err)
+        })
     }
   }
 }

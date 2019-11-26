@@ -62,9 +62,8 @@ export default {
           email: this.form.email,
           password: this.form.password
         })
-          .then(() => {
+          .then((data) => {
             alert('Login Success')
-            this.$router.push('/lobby')
           })
       } else {
         alert('Email and Password are not matched.')
