@@ -29,12 +29,14 @@ let app
 
 firebase.auth.onAuthStateChanged(user => {
   if (!app) {
-    if (user) {
-      store.commit('Auth/SETUSER', user)
-    }
     app = new Vue({
       router,
       store,
+      async beforeCreate () {
+        if (user) {
+          await store.dispatch('Auth/autoLogin', user)
+        }
+      },
       render: h => h(App)
     }).$mount('#app')
   }
