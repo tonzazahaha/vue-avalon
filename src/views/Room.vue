@@ -1,7 +1,7 @@
 <template>
   <div class="room">
     <layout-main>
-      <layout-room v-if="!loading">
+      <layout-room v-if="!loading || room">
         <!-- room detail -->
         <template v-slot:room-detail>
           <b-col cols="auto" align-self="center" class="ml-0">
@@ -10,11 +10,11 @@
           </b-col>
           <b-col cols="auto" align-self="center" class="ml-5">
             <span>Mode</span>
-            <h5>{{ room.mode }}</h5>
+            <h5>{{ room.roomMode }}</h5>
           </b-col>
           <b-col cols="auto" align-self="center" class="ml-5">
             <span>Size</span>
-            <h5>{{ room.amoung }}/{{ room.max }}</h5>
+            <h5>{{ room.player.length }}/{{ room.roomSize }}</h5>
           </b-col>
           <b-col align-self="center" cols="auto" class="ml-auto">
             <h5><em class="material-icons pr-2">build</em> Setting</h5>
@@ -25,7 +25,7 @@
         </template>
         <!-- room wrapper -->
         <template v-slot:room-wrapper>
-          <wrapper-room-player :players="players" :leader="leader"></wrapper-room-player>
+          <wrapper-room-player :players="room.player" :leader="leader"></wrapper-room-player>
         </template>
         <!-- room footer -->
         <template v-slot:room-footer>
@@ -49,12 +49,6 @@ export default {
   },
   data () {
     return {
-      room: {
-        roomName: 'ROOM 0001',
-        mode: 'nomal',
-        amoung: 7,
-        max: 10
-      },
       players: [
         { id: '1', username: 'My name is so long', photoUrl: 'https://www.reactiongifs.com/wp-content/uploads/2013/07/running.gif' },
         { id: '2', username: 'Meow', photoUrl: 'https://66.media.tumblr.com/tumblr_lt7bswjhFd1r4ghkoo1_250.gifv' },
@@ -88,7 +82,7 @@ export default {
           console.log(res)
           this.$store.dispatch('Room/joinRoom', { roomId, player: this.user, password: '' })
             .then(() => {
-              console.log('ok')
+              this.$store.commit('Room/SETROOM', res.roomData)
               this.loading = false
             })
             .catch(_ => {
@@ -105,6 +99,9 @@ export default {
   computed: {
     user () {
       return this.$store.getters['Auth/getUser']
+    },
+    room () {
+      return this.$store.getters['Room/getRoom']
     }
   }
 }
