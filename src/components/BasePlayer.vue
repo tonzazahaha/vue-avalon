@@ -4,12 +4,12 @@
       <div v-if="player.role == 'bad'" class="player-image" :class="{'player-bad': player.role === 'bad'}">
         <img :src="player.photoUrl" class="player-image" :class="{'bg-grey': player.username !== ''}" alt="">
       </div>
-      <div v-else-if="player.username == 'Satchan'" class="player-image" :class="{'player-cute': player.role === 'angel'}">
+      <div v-else-if="player.username == 'SatchanBNK48'" class="player-image" :class="{'player-cute': player.role === 'angel'}">
         <img :src="player.photoUrl" class="player-image" :class="{'bg-grey': player.username !== ''}" alt="">
       </div>
       <img :src="player.photoUrl" class="player-image" :class="{'bg-grey': player.username !== ''}" alt="" v-else>
       <img v-if="isLeader" src="../assets/player-icons/crown.png" class="icon-leader" alt="">
-      <img v-if="player.username == 'Satchan'" src="../assets/saturn.png" class="icon-leader" alt="">
+      <img v-if="player.username == 'SatchanBNK48'" src="../assets/saturn.png" class="icon-leader" alt="">
 
     </div>
     <div class="player-name">
