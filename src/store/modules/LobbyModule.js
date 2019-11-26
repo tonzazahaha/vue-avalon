@@ -1,11 +1,9 @@
-import io from 'socket.io-client'
-import { $api } from '@/services/api'
+const firebase = require('../../services/firebaseConfig')
 
 const LobbyModule = {
   namespaced: true,
   state: {
-    rooms: [],
-    socket: null
+    rooms: []
   },
   getters: {
     getRoomList (state) {
@@ -18,38 +16,23 @@ const LobbyModule = {
     },
     PUSHROOM (state, payload) {
       state.rooms.push(payload)
-    },
-    SETSOCKET (state, payload) {
-      state.socket = payload
     }
   },
   actions: {
     fetchRoom ({ commit }) {
-      $api({ path: '/rooms', method: 'get' })
-        .then(res => {
-          if (res.success) {
-            commit('SETROOMS', res.roomData)
-          } else {
-            commit('SETROOMS', [])
-          }
+      firebase.db.ref('rooms').on('value', snapshot => {
+        var temp = []
+        snapshot.forEach(room => {
+          temp.push(room.val())
         })
-    },
-    createRoom ({ state }, payload) {
-      state.socket.emit('createRoom', payload)
-    },
-    connectSocket ({ commit, rootGetters }) {
-      let user = rootGetters['Auth/getUser']
-      commit('SETSOCKET', io('localhost:3000/lobby', { query: user }))
-    },
-    onRooms ({ commit, state }) {
-      state.socket.on('rooms', newRoom => {
-        console.log(newRoom)
-        commit('PUSHROOM', newRoom)
+        commit('SETROOMS', temp)
       })
     },
-    disConnectSocket ({ commit, state }, payload) {
-      state.socket.disconnect()
-      commit('SETSOCKET', null)
+    createRoom ({ commit }, payload) {
+      firebase.db.ref('rooms').push(payload)
+        .then(v => {
+          console.log(v)
+        })
     }
   }
 }

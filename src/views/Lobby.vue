@@ -20,7 +20,7 @@
               sticky-header="calc(100vh - 149px)"
             >
               <template v-slot:cell(roomSize)="data">
-                {{ data.item.player.length }}/{{ data.item.roomSize }}
+                {{ data.item.roomSize }}
               </template>
               <template v-slot:cell()="data">
                 {{ data.value }}
@@ -111,7 +111,10 @@ export default {
       newRoom: {
         roomName: '',
         roomPassword: '',
-        roomSize: 10
+        roomSize: 10,
+        roomMode: 'normal',
+        players: [],
+        gamePhase: 0
       },
       options: [
         { value: 10, text: '10' }
@@ -143,12 +146,7 @@ export default {
       if (this.newRoom.roomName === '') {
         return alert('please enter room name')
       } else {
-        this.$store.dispatch('Lobby/createRoom', {
-          roomName: this.newRoom.roomName,
-          roomPassword: this.newRoom.roomPassword,
-          roomMode: 'nomal',
-          roomSize: this.newRoom.roomSize
-        })
+        this.$store.dispatch('Lobby/createRoom', this.newRoom)
         this.showModal = false
       }
     },
@@ -161,17 +159,12 @@ export default {
     }
   },
   async created () {
-    await this.$store.dispatch('Lobby/connectSocket')
-    await this.$store.dispatch('Lobby/onRooms')
     await this.$store.dispatch('Lobby/fetchRoom')
   },
   computed: {
     roomList () {
       return this.$store.getters['Lobby/getRoomList']
     }
-  },
-  destroyed () {
-    this.$store.dispatch('Lobby/disConnectSocket')
   }
 }
 </script>
