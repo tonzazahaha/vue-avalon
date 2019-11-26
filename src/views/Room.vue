@@ -1,7 +1,7 @@
 <template>
   <div class="room">
     <layout-main>
-      <layout-room>
+      <layout-room v-if="!loading">
         <!-- room detail -->
         <template v-slot:room-detail>
           <b-col cols="auto" align-self="center" class="ml-0">
@@ -60,8 +60,18 @@ export default {
         { id: '2', username: 'Meow', photoUrl: 'https://66.media.tumblr.com/tumblr_lt7bswjhFd1r4ghkoo1_250.gifv' },
         { id: '3', username: 'Minion', photoUrl: 'https://media3.giphy.com/media/1yYWGu3caE3m0/giphy.gif?cid=790b7611ec9b9bf971bbeffcc0ec7c276e0ca7064fcd0cde&rid=giphy.gif' }
       ],
-      leader: '1'
+      leader: '1',
+      loading: false
     }
+  },
+  created () {
+    this.fetchData()
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
+  destroyed () {
+    this.$store.dispatch('Room/disConnectSocket')
   },
   methods: {
     leaveRoom () {
@@ -69,6 +79,32 @@ export default {
     },
     ingame () {
       this.$router.push('/ingame')
+    },
+    fetchData () {
+      this.loading = true
+      const roomId = this.$route.params.roomId
+      this.$store.dispatch('Room/fetchRoomInfo', roomId)
+        .then(res => {
+          console.log(res)
+          this.$store.dispatch('Room/joinRoom', { roomId, player: this.user, password: '' })
+            .then(() => {
+              console.log('ok')
+              this.loading = false
+            })
+            .catch(_ => {
+              alert('Can not join room')
+              this.$router.push('/lobby')
+            })
+        })
+        .catch(e => {
+          alert('Room Not Found')
+          this.$router.push('/lobby')
+        })
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.getters['Auth/getUser']
     }
   }
 }
