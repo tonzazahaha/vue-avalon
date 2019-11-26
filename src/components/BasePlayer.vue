@@ -12,7 +12,7 @@
       <img v-if="player.displayName == 'SatchanBNK48'" src="../assets/saturn.png" class="icon-leader" alt="">
     </div>
     <div class="player-name">
-      {{ cutUsername }}
+      {{ cutUsername }} <span v-if="isHead">(head)</span>
     </div>
   </div>
 </template>
@@ -31,6 +31,10 @@ export default {
       }
     },
     isLeader: {
+      type: Boolean,
+      default: false
+    },
+    isHead: {
       type: Boolean,
       default: false
     }

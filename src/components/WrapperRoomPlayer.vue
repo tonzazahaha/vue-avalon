@@ -10,6 +10,7 @@
         :player="player"
         :isLeader="leader === player.id"
         :isSelected="false"
+        :isHead="head === player.id"
       ></base-player>
     </b-col>
   </b-row>
@@ -34,6 +35,10 @@ export default {
     leader: {
       type: String,
       default: null
+    },
+    head: {
+      type: String,
+      default: ''
     }
   },
   computed: {

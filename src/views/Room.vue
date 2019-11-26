@@ -25,7 +25,7 @@
         </template>
         <!-- room wrapper -->
         <template v-slot:room-wrapper>
-          <wrapper-room-player :players="room.players" :leader="leader"></wrapper-room-player>
+          <wrapper-room-player :players="room.players" :head="room.head" :leader="leader"></wrapper-room-player>
         </template>
         <!-- room footer -->
         <template v-slot:room-footer>
@@ -68,7 +68,7 @@ export default {
       this.$router.push('/lobby')
     },
     ingame () {
-      this.$router.push('/ingame')
+      // this.$router.push('/ingame')
     }
   },
   computed: {
