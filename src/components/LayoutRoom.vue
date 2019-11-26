@@ -1,10 +1,8 @@
 <template>
   <div class="room">
     <b-container class="h-100" fluid>
-      <b-row align-v="start" class="px-5 room-detail" style="height: 115px;">
-        <!-- room detail -->
-        <slot name="room-detail"></slot>
-      </b-row>
+      <!-- room detail -->
+      <slot name="room-detail"></slot>
       <!-- <b-row align-v="center" class="room-member pl-5"> -->
         <!-- room wrapper -->
         <slot name="room-wrapper"></slot>
