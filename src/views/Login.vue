@@ -65,8 +65,11 @@ export default {
           .then((data) => {
             alert('Login Success')
           })
+          .catch(err => {
+            alert(err.message)
+          })
       } else {
-        alert('Email and Password are not matched.')
+        alert('Email is required')
       }
     }
   }

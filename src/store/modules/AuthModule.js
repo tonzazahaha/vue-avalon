@@ -48,16 +48,18 @@ const AuthModule = {
     async autoLogin ({ commit }, payload) {
       await commit('SETUSER', payload)
     },
-    login ({ commit, dispatch }, payload) {
-      firebase.auth.signInWithEmailAndPassword(payload.email, payload.password)
-        .then(data => {
-          commit('SETUSER', data.user)
-          router.push('/lobby')
-          Promise.resolve(data)
-        })
-        .catch(err => {
-          Promise.reject(err)
-        })
+    login ({ commit }, payload) {
+      return new Promise((resolve, reject) => {
+        firebase.auth.signInWithEmailAndPassword(payload.email, payload.password)
+          .then(data => {
+            commit('SETUSER', data.user)
+            router.push('/lobby')
+            resolve()
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
     },
     fetchUser ({ commit, dispatch }, payload) {
       return new Promise((resolve, reject) => {

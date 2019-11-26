@@ -154,7 +154,10 @@ export default {
       this.newRoom = {
         roomName: '',
         roomPassword: '',
-        roomSize: 10
+        roomSize: 10,
+        roomMode: 'normal',
+        players: [],
+        gamePhase: 0
       }
     }
   },
