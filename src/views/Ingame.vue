@@ -31,12 +31,12 @@
             </b-row>
             <b-row class="mx-auto">
                 <div cols="auto" class="mx-auto">
-                  <img src="../assets/player-icons/circle.png" class="resize mr-3" v-if="rejectCount <= 1">
-                  <img src="../assets/player-icons/image 5fire.png" class="resize mr-3" v-else>
-                  <img src="../assets/player-icons/circle.png" class="resize mx-auto" v-if="rejectCount <= 2">
-                  <img src="../assets/player-icons/image 5fire.png" class="resize mx-auto" v-else>
-                  <img src="../assets/player-icons/circle.png" class="resize ml-3" v-if="rejectCount <= 3">
-                  <img src="../assets/player-icons/image 5fire.png" class="resize ml-3" v-else>
+                  <img src="../assets/player-icons/image 5fire.png" class="resize mr-3" v-if="rejectCount >= 1">
+                  <img src="../assets/player-icons/circle.png" class="resize mr-3" v-else>
+                  <img src="../assets/player-icons/image 5fire.png" class="resize mx-auto" v-if="rejectCount >= 2">
+                  <img src="../assets/player-icons/circle.png" class="resize mx-auto" v-else>
+                  <img src="../assets/player-icons/image 5fire.png" class="resize ml-3" v-if="rejectCount >= 3">
+                  <img src="../assets/player-icons/circle.png" class="resize ml-3" v-else>
                 </div>
             </b-row>
           </b-col>
