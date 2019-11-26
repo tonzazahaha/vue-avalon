@@ -13,11 +13,20 @@
         </template>
         <!-- room footer -->
         <template v-slot:room-footer>
+<<<<<<< HEAD
           <div v-if="phase == 0" class="mx-auto">
             <b-col cols="auto" class="mx-auto">
               <b-button variant="danger" class="btn-vote mx-3" @click="phase = 1">START</b-button>
             </b-col>
           </div>
+=======
+          <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && currentIsHead">
+            <b-button variant="danger" class="btn-vote mx-3" @click="ingame">START</b-button>
+          </b-col>
+          <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && !currentIsHead">
+            <h3 class="text-grey">Waiting for head's room start...</h3>
+          </b-col>
+>>>>>>> 42c0848b696d41f1745891da78094a6c4cc4d533
         </template>
       </layout-room>
     </layout-main>
@@ -64,6 +73,9 @@ export default {
     this.$store.dispatch('Room/joinRoom', { id: this.$route.params.roomId, password: '' })
   },
   methods: {
+    leaveRoom () {
+      this.$store.dispatch('Room/leaveRoom', { id: this.$route.params.roomId })
+    },
     ingame () {
       // this.$router.push('/ingame')
     }
@@ -74,6 +86,14 @@ export default {
     },
     room () {
       return this.$store.getters['Room/getRoom']
+    },
+    currentIsHead () {
+      const playerIndex = this.room.players.findIndex(player => player.id === this.user.uid)
+      if (playerIndex > -1) {
+        return this.room.players[playerIndex].id === this.room.head
+      }
+      console.log('can not check currentIsHead')
+      return false
     }
   }
 }

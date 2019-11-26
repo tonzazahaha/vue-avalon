@@ -58,7 +58,10 @@ const RoomModule = {
     },
     leaveRoom ({ commit, rootGetters }, payload) {
       const currentUser = rootGetters['Auth/getUser']
-      firebase.db.ref('rooms/' + payload.id + '/players').child(currentUser.uid).set(null)
+      firebase.db.ref('rooms/' + payload.id + '/players').child(currentUser.uid).remove()
+        .then(() => {
+          router.push('/lobby')
+        })
     }
   }
 }

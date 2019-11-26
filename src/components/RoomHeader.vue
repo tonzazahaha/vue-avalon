@@ -32,7 +32,6 @@ export default {
   methods: {
     leaveRoom () {
       this.$store.dispatch('Room/leaveRoom', { id: this.$route.params.roomId })
-      this.$router.push('/lobby')
     }
   }
 }
