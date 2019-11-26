@@ -29,8 +29,11 @@
         </template>
         <!-- room footer -->
         <template v-slot:room-footer>
-          <b-col cols="auto" class="mx-auto">
+          <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && currentIsHead">
             <b-button variant="danger" class="btn-vote mx-3" @click="ingame">START</b-button>
+          </b-col>
+          <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && !currentIsHead">
+            <h3 class="text-grey">Waiting for head's room start...</h3>
           </b-col>
         </template>
       </layout-room>
@@ -77,6 +80,14 @@ export default {
     },
     room () {
       return this.$store.getters['Room/getRoom']
+    },
+    currentIsHead () {
+      const playerIndex = this.room.players.findIndex(player => player.id === this.user.uid)
+      if (playerIndex > -1) {
+        return this.room.players[playerIndex].id === this.room.head
+      }
+      console.log('can not check currentIsHead')
+      return false
     }
   }
 }
