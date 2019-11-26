@@ -27,7 +27,7 @@
               </template>
               <template v-slot:cell(action)="data">
                 <div class="mr-4">
-                  <b-button size="sm" block variant="danger" @click="joinRoom(data.item._id)">Play</b-button>
+                  <b-button size="sm" block variant="danger" @click="joinRoom(data.item.id)">Play</b-button>
                 </div>
               </template>
             </b-table>
@@ -121,7 +121,7 @@ export default {
       ],
       roomTable: {
         fields: [
-          { key: '_id', sortable: true },
+          { key: 'id', sortable: true },
           { key: 'roomName', sortable: true },
           { key: 'roomMode' },
           { key: 'roomSize', sortable: true },
