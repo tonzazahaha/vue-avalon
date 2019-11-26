@@ -23,7 +23,9 @@ const LobbyModule = {
       firebase.db.ref('rooms').on('value', snapshot => {
         var temp = []
         snapshot.forEach(room => {
-          temp.push(room.val())
+          var tempRoom = { ...room.val() }
+          tempRoom['id'] = room.key
+          temp.push(tempRoom)
         })
         commit('SETROOMS', temp)
       })
@@ -44,9 +46,6 @@ const LobbyModule = {
         role: 'good',
         leader: false
       })
-    },
-    joinRoom ({ commit }, payload) {
-      firebase.db.ref('rooms').child(payload.id)
     }
   }
 }
