@@ -14,7 +14,7 @@
         <!-- room footer -->
         <template v-slot:room-footer>
           <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && currentIsHead">
-            <b-button variant="danger" class="btn-vote mx-3" @click="ingame">START</b-button>
+            <b-button variant="danger" class="btn-vote mx-3" @click="startGame" :disabled="room.players.length<5">START</b-button>
           </b-col>
           <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && !currentIsHead">
             <h3 class="text-grey">Waiting for head's room start...</h3>
@@ -70,8 +70,8 @@ export default {
     leaveRoom () {
       this.$store.dispatch('Room/leaveRoom', { id: this.$route.params.roomId })
     },
-    ingame () {
-      this.$router.push('/ingame')
+    startGame () {
+      this.$store.dispatch('Room/gameStart', { id: this.$route.params.roomId })
     }
   },
   computed: {
