@@ -19,7 +19,7 @@
           <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && !currentIsHead">
             <h3 class="text-grey">Waiting for head's room start...</h3>
           </b-col>
-          <game-footer :phase="room.phase" v-if="phase !== 0"></game-footer>
+          <game-footer :room="room" v-if="room.gamePhase !== 0"></game-footer>
         </template>
       </layout-room>
     </layout-main>

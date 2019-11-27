@@ -1,12 +1,12 @@
 <template>
   <div class="mx-auto">
-    <div v-if="phase == 2">
+    <div v-if="room.gamePhase == 4">
       <b-col cols="auto" class="mx-auto">
         <b-button variant="success" class="btn-vote mx-3">Approve</b-button>
         <b-button variant="danger" class="btn-vote mx-3">Reject</b-button>
       </b-col>
     </div>
-    <div v-if="phase == 3">
+    <div v-if="room.gamePhase == 5">
       <b-col cols="auto" class="mx-auto">
         <b-button variant="success" class="btn-vote mx-3">success</b-button>
         <b-button variant="danger" class="btn-vote mx-3">Fail</b-button>
@@ -18,10 +18,20 @@
 <script>
 
 export default {
-  data () {
-    return {
-      phase: 2,
-      vote: 0
+  props: {
+    room: {
+      type: Object,
+      default: function () {
+        return {
+          gamePhase: 0,
+          players: []
+        }
+      }
+    }
+  },
+  computed: {
+    user () {
+      return this.$store.getters['Auth/getUser']
     }
   }
 }
