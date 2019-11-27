@@ -27,12 +27,12 @@
       </b-row>
       <b-row class="mx-auto">
           <div cols="auto" class="mx-auto">
-            <img src="../assets/player-icons/image 5fire.png" class="resize mr-3" v-if="game.rejectCount >= 1">
-            <img src="../assets/player-icons/circle.png" class="resize mr-3" v-else>
-            <img src="../assets/player-icons/image 5fire.png" class="resize mx-auto" v-if="game.rejectCount >= 2">
-            <img src="../assets/player-icons/circle.png" class="resize mx-auto" v-else>
-            <img src="../assets/player-icons/image 5fire.png" class="resize ml-3" v-if="game.rejectCount >= 3">
-            <img src="../assets/player-icons/circle.png" class="resize ml-3" v-else>
+            <img alt="" src="../assets/player-icons/image 5fire.png" class="resize mr-3" v-if="game.rejectCount >= 1">
+            <img alt="" src="../assets/player-icons/circle.png" class="resize mr-3" v-else>
+            <img alt="" src="../assets/player-icons/image 5fire.png" class="resize mx-auto" v-if="game.rejectCount >= 2">
+            <img alt="" src="../assets/player-icons/circle.png" class="resize mx-auto" v-else>
+            <img alt="" src="../assets/player-icons/image 5fire.png" class="resize ml-3" v-if="game.rejectCount >= 3">
+            <img alt="" src="../assets/player-icons/circle.png" class="resize ml-3" v-else>
             </div>
       </b-row>
     </b-col>
@@ -47,18 +47,16 @@ export default {
       type: Object,
       default: function () {
         return {
-          game: {
-            time: '10',
-            rejectCount: 2,
-            mission: [
-              { round: '1', text: '3', result: 0 },
-              { round: '2', text: '3', result: -1 },
-              { round: '3', text: '3', result: -1 },
-              { round: '4', text: '3', result: -1 },
-              { round: '5', text: '4', result: -1 }
-            ],
-            currentMission: 0
-          }
+          time: '10',
+          rejectCount: 2,
+          mission: [
+            { round: '1', text: '3', result: 0 },
+            { round: '2', text: '3', result: -1 },
+            { round: '3', text: '3', result: -1 },
+            { round: '4', text: '3', result: -1 },
+            { round: '5', text: '4', result: -1 }
+          ],
+          currentMission: 0
         }
       }
     }

@@ -48,7 +48,7 @@ export default {
       ],
       leader: '1',
       loading: false,
-      phase: 0,
+      phase: 1,
       game: {
         time: '10',
         rejectCount: 2,
