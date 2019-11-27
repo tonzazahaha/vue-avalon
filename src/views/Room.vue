@@ -4,7 +4,7 @@
       <layout-room v-if="room">
         <!-- room detail -->
         <template v-slot:room-detail>
-          <room-header :roomName="room.roomName" :roomMode="room.roomMode" :players="room.players" :roomSize="room.roomSize" v-if="phase === 0"></room-header>
+          <room-header :roomName="room.roomName" :roomMode="room.roomMode" :players="room.players" :roomSize="room.roomSize" v-if="room.gamePhase === 0"></room-header>
           <game-header :game="room.game" v-else></game-header>
         </template>
         <!-- room wrapper -->
@@ -19,7 +19,7 @@
           <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && !currentIsHead">
             <h3 class="text-grey">Waiting for head's room start...</h3>
           </b-col>
-          <game-footer :phase="room.phase" v-if="phase !== 0"></game-footer>
+          <game-footer :phase="room.phase" v-if="room.gamePhase !== 0"></game-footer>
         </template>
       </layout-room>
     </layout-main>
@@ -48,19 +48,17 @@ export default {
       ],
       leader: '1',
       loading: false,
-      phase: 1,
-      game: {
-        time: '10',
-        rejectCount: 2,
-        mission: [
-          { round: '1', text: '3', result: 0 },
-          { round: '2', text: '3', result: -1 },
-          { round: '3', text: '3', result: -1 },
-          { round: '4', text: '3', result: -1 },
-          { round: '5', text: '4', result: -1 }
-        ],
-        currentMission: 0
-      }
+      gamePhase: 0,
+      time: '10',
+      rejectCount: 2,
+      mission: [
+        { round: '1', text: '3', result: 0 },
+        { round: '2', text: '3', result: -1 },
+        { round: '3', text: '3', result: -1 },
+        { round: '4', text: '3', result: -1 },
+        { round: '5', text: '4', result: -1 }
+      ],
+      currentMission: 0
     }
   },
   created () {
