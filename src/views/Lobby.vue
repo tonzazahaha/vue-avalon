@@ -74,8 +74,7 @@
           <b-form-input
             id="room-password"
             type="password"
-            v-model="newRoom.roomPassword"
-            required
+            disabled
             placeholder="Enter your Room's Password"
           ></b-form-input>
         </b-form-group>
