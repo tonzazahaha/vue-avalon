@@ -106,22 +106,15 @@ exports.calculateVoteSuccess = functions.database.ref('/rooms/{roomID}/countTota
                             fail += 1;
                         }
                     })
-                    if (success === 5) {
-                        missions.once('value', mission => {
-                            mission.forEach(m => {
-                                currentMission.once('value', v => {
-                                    if(v.val() === m.parent.child('missions/' + m.key + '/result')) {
-                                        m.parent.child('missions/' + m.key + '/result').set(1);
-                                    }
-                                })
-                            })
+                    if (fail === 0) {
+                        currentMission.once('value', v => {
+                            console.log('===================> ' + v.val() + '================>' + v.key);
+                            missions.parent.child('missions/' + v.val() + '/result').set(1);
                         })
-                        currentMission.transaction((count) => {
-                            return (count || 0) + 1;
+                        currentMission.transaction((z) => {
+                            return (z || 0) + 1;
                         })
-                        gamePhase.transaction((count) => {
-                            return (count || 0) + 1;
-                        })
+                        gamePhase.set(6);
                         countTotalSuccess.set(null);
                         countPlayer.once('value', players => {
                             players.forEach(player => {
@@ -130,21 +123,14 @@ exports.calculateVoteSuccess = functions.database.ref('/rooms/{roomID}/countTota
                         })
                     }
                     else if (fail>0) {
-                        missions.once('value', mission => {
-                            mission.forEach(m => {
-                                currentMission.once('value', v => {
-                                    if(v.val() === m.parent.child('missions/' + m.key + '/result')) {
-                                        m.parent.child('missions/' + m.key + '/result').set(0);
-                                    }
-                                })
-                            })
+                        currentMission.once('value', v => {
+                            console.log('===================> ' + v.val() + '================>' + v.key);
+                            missions.parent.child('missions/' + v.val() + '/result').set(0);
                         })
-                        currentMission.transaction((count) => {
-                            return (count || 0) + 1;
+                        currentMission.transaction((q) => {
+                            return (q || 0) + 1;
                         })
-                        gamePhase.transaction((count) => {
-                            return (count || 0) + 1;
-                        })
+                        gamePhase.set(6);
                         countPlayer.once('value', players => {
                             players.forEach(player => {
                                 countTotalApprove.parent.child('players/' + player.key + '/voteSuccess').set(null);
