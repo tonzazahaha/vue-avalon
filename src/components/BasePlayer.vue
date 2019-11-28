@@ -1,15 +1,15 @@
 <template>
-  <div class="player">
+  <div class="player" @click="player.isSelected = player.isSelected * (-1)">
     <div class="player-image" :class="{'isEmpty': player.displayName === ''}">
-      <div v-if="player.role == 'bad'" class="player-image" :class="{'player-bad': player.role === 'bad'}">
+      <div v-if="player.role === 'bad' && gamePhase !== 0" class="player-image" :class="{'player-bad': player.role === 'bad' && player.displayName === 'SatchanBNK48'}">
         <img :src="player.photoURL" class="player-image" :class="{'bg-grey': player.displayName !== ''}" alt="">
       </div>
       <div v-else-if="player.displayName == 'SatchanBNK48'" class="player-image" :class="{'player-cute': player.displayName === 'SatchanBNK48'}">
         <img :src="player.photoURL" class="player-image" :class="{'bg-grey': player.displayName !== ''}" alt="">
       </div>
       <img :src="player.photoURL" class="player-image" :class="{'bg-grey': player.displayName !== ''}" alt="" v-else>
-      <img v-if="isLeader" src="../assets/player-icons/crown.png" class="icon-leader" alt="">
-      <img v-if="player.displayName == 'SatchanBNK48'" src="../assets/saturn.png" class="icon-leader" alt="">
+      <img v-if="leader === player.id && gamePhase !== 0" src="../assets/player-icons/crown.png" class="icon-leader" alt="">
+      <img v-else-if="player.displayName == 'SatchanBNK48'" src="../assets/saturn.png" class="icon-leader" alt="">
     </div>
     <div class="player-name" :class="{'isMe': player.id === user.uid}">
       {{ cutUsername }} <span v-if="isHead">(head)</span>
@@ -24,19 +24,23 @@ export default {
     }
   },
   props: {
+    leader: {
+      type: String,
+      default: 'error'
+    },
     player: {
       type: Object,
       default: function () {
         return { photoUrl: '', displayName: '', role: 'good' }
       }
     },
-    isLeader: {
-      type: Boolean,
-      default: false
-    },
     isHead: {
       type: Boolean,
       default: false
+    },
+    gamePhase: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
@@ -45,9 +49,11 @@ export default {
         return `${this.player.displayName.slice(0, 10)}...`
       }
       return this.player.displayName
-    },
-    user () {
-      return this.$store.getters['Auth/getUser']
+    }
+  },
+  methods: {
+    getRole (player, id) {
+      console.log(player)
     }
   }
 }

@@ -8,9 +8,11 @@
     >
       <base-player
         :player="player"
-        :isLeader="leader === player.id"
         :isSelected="false"
         :isHead="head === player.id"
+        :leader="leader"
+        :gamePhase="gamePhase"
+        :userRole="userRole"
       ></base-player>
     </b-col>
   </b-row>
@@ -34,11 +36,19 @@ export default {
     },
     leader: {
       type: String,
-      default: null
+      default: 'error'
     },
     head: {
       type: String,
       default: ''
+    },
+    gamePhase: {
+      type: Number,
+      default: 0
+    },
+    userRole: {
+      type: String,
+      default: 'good'
     }
   },
   computed: {
@@ -48,6 +58,9 @@ export default {
         temp.push({ id: '', photoURL: '', displayName: '' })
       }
       return temp
+    },
+    user () {
+      return this.$store.getters['Auth/getUser']
     }
   },
   methods: {

@@ -31,3 +31,19 @@ exports.autoRemoveRoom = functions.database.ref('/rooms/{roomID}/players/{player
     return null
   })
 })
+
+exports.nextLeader = functions.database.ref('/rooms/{roomID}/gamePhase').onUpdate((snapshot, context) => {
+  console.log(context)
+  if (snapshot.after._data === 2) {
+    var leader = snapshot.after.ref.parent.child('leader')
+    var player = snapshot.after.ref.parent.child('players')
+    return player.once('value', sp => {
+      var leaderID = leader.once('value', sp => {
+        return sp
+      })
+      console.log(leaderID)
+      
+    }) 
+  }
+  return null
+})

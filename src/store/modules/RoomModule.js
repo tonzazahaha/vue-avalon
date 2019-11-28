@@ -35,7 +35,7 @@ const RoomModule = {
                 displayName: currentUser.displayName,
                 photoURL: currentUser.photoURL,
                 role: 'good',
-                leader: false
+                isSelected: 0
               })
             }
             commit('SETROOM', temp)
@@ -69,6 +69,8 @@ const RoomModule = {
       update['rooms/' + payload.id + '/gamePhase'] = 1
       let players = [ ...state.room.players ]
       let roles = randomRole(players.length)
+      let leader = Math.floor(Math.random() * (players.length + 1))
+      update['rooms/' + payload.id + '/leader/'] = players[leader].id
       for (let i = 0; i < players.length; i++) {
         update['rooms/' + payload.id + '/players/' + players[i].id] = {
           displayName: players[i].displayName,
