@@ -1,6 +1,7 @@
 import router from '../../router'
 import objToArr from '../../services/objToArr'
 import randomRole from '../../services/randomRole'
+import { resolve } from 'dns'
 
 const firebase = require('../../services/firebaseConfig')
 
@@ -107,6 +108,17 @@ const RoomModule = {
           .catch(e => {
             reject(e)
           })
+      })
+    },
+    voteApprove ({ commit }, payload) {
+      return new Promise((resolve, reject) => {
+        firebase.db.ref('rooms/' + payload.roomId + '/players/' + payload.userId).child('voteApprove').set(payload.vote ? 1 : 0)
+        .then(res => {
+          resolve()
+        })
+        .catch(e => {
+          reject(e)
+        })
       })
     }
   }
