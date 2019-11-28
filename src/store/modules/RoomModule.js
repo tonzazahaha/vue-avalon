@@ -77,6 +77,9 @@ const RoomModule = {
         }
       }
       return firebase.db.ref().update(update)
+    },
+    voteSuccess ({ commit }, payload) {
+      firebase.db.ref('rooms/' + payload.roomId + '/players/' + payload.userId).child('voteSuccess').set(payload.vote ? 1 : 0)
     }
   }
 }
