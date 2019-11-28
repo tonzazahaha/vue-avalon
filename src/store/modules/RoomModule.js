@@ -1,15 +1,20 @@
 import router from '../../router'
 import objToArr from '../../services/objToArr'
 import randomRole from '../../services/randomRole'
+import { resolve } from 'dns'
 
 const firebase = require('../../services/firebaseConfig')
 
 const RoomModule = {
   namespaced: true,
   state: {
-    room: null
+    room: null,
+    loading: false
   },
   getters: {
+    getLoading (state) {
+      return state.loading
+    },
     getRoom (state) {
       return state.room
     }
@@ -17,16 +22,20 @@ const RoomModule = {
   mutations: {
     SETROOM (state, payload) {
       state.room = payload
+    },
+    SETLOADING (state, payload) {
+      state.loading = payload
     }
   },
   actions: {
     joinRoom ({ dispatch, commit, rootGetters }, payload) {
-      // init socket
+      commit('SETLOADING', true)
       return firebase.db.ref('rooms').child(payload.id).once('value', snapshot => {
         if (snapshot.exists()) {
           if (snapshot.val().roomPassword === payload.password) {
             const temp = { ...snapshot.val() }
             temp.players = objToArr(temp.players)
+            temp.missions = objToArr(temp.missions)
             const currentUser = rootGetters['Auth/getUser']
             const playerIndex = temp.players.findIndex(p => p.id === currentUser.uid)
             if (playerIndex <= -1) {
@@ -40,6 +49,7 @@ const RoomModule = {
             }
             commit('SETROOM', temp)
             alert('join room')
+            commit('SETLOADING', false)
             dispatch('onRoomChange', payload)
           } else {
             alert('password wrong')
@@ -54,6 +64,7 @@ const RoomModule = {
       firebase.db.ref('rooms').child(payload.id).on('value', snapshot => {
         const temp = { ...snapshot.val() }
         temp.players = objToArr(temp.players)
+        temp.missions = objToArr(temp.missions)
         commit('SETROOM', temp)
       })
     },
@@ -78,7 +89,39 @@ const RoomModule = {
           role: roles[i]
         }
       }
-      return firebase.db.ref().update(update)
+      firebase.db.ref().update(update)
+      var mission = {}
+      for (let j = 1; j <= 5; j++) {
+        mission['rooms/' + payload.id + '/missions/' + j] = {
+          round: j,
+          result: -1,
+          text: 3
+        }
+      }
+      firebase.db.ref().update(mission)
+      firebase.db.ref('rooms/' + payload.id + '/currentMission').set(1)
+    },
+    voteSuccess ({ commit }, payload) {
+      return new Promise((resolve, reject) => {
+        firebase.db.ref('rooms/' + payload.roomId + '/players/' + payload.userId).child('voteSuccess').set(payload.vote ? 1 : 0)
+          .then(res => {
+            resolve()
+          })
+          .catch(e => {
+            reject(e)
+          })
+      })
+    },
+    voteApprove ({ commit }, payload) {
+      return new Promise((resolve, reject) => {
+        firebase.db.ref('rooms/' + payload.roomId + '/players/' + payload.userId).child('voteApprove').set(payload.vote ? 1 : 0)
+        .then(res => {
+          resolve()
+        })
+        .catch(e => {
+          reject(e)
+        })
+      })
     }
   }
 }
