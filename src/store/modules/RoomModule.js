@@ -27,6 +27,7 @@ const RoomModule = {
           if (snapshot.val().roomPassword === payload.password) {
             const temp = { ...snapshot.val() }
             temp.players = objToArr(temp.players)
+            temp.missions = objToArr(temp.missions)
             const currentUser = rootGetters['Auth/getUser']
             const playerIndex = temp.players.findIndex(p => p.id === currentUser.uid)
             if (playerIndex <= -1) {
@@ -54,6 +55,7 @@ const RoomModule = {
       firebase.db.ref('rooms').child(payload.id).on('value', snapshot => {
         const temp = { ...snapshot.val() }
         temp.players = objToArr(temp.players)
+        temp.missions = objToArr(temp.missions)
         commit('SETROOM', temp)
       })
     },
@@ -76,7 +78,17 @@ const RoomModule = {
           role: roles[i]
         }
       }
-      return firebase.db.ref().update(update)
+      firebase.db.ref().update(update)
+      var mission = {}
+      for (let j = 1; j <= 5; j++) {
+        mission['rooms/' + payload.id + '/missions/' + j] = {
+          round: j,
+          result: -1,
+          text: 3
+        }
+      }
+      firebase.db.ref().update(mission)
+      firebase.db.ref('rooms/' + payload.id + '/currentMission').set(1)
     },
     voteSuccess ({ commit }, payload) {
       return new Promise((resolve, reject) => {

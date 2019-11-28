@@ -1,10 +1,10 @@
 <template>
   <b-row align-v="start" class="px-5 room-detail" style="height: 115px;">
     <b-col cols="2" class="mx-auto">
-      <h1 class="display-3">{{ game.time }}s</h1>
+      <h1 class="display-3" v-if="timeCounter" :class="{'text-danger': timeCounter < 4}">{{ timeCounter }}s</h1>
     </b-col>
-    <b-col cols="auto" class="mx-3 mt-3" v-for="(circle, index) in game.mission" :key="index">
-      <template v-if="game.currentMission === index">
+    <b-col cols="auto" class="mx-3 mt-3" v-for="(circle, index) in room.missions" :key="index">
+      <template v-if="room.currentMission === index + 1">
         <img alt="Round 1" src="../assets/player-icons/stage4blue.png" />
         <h1 class="centered-text">{{circle.text}}</h1>
       </template>
@@ -27,11 +27,11 @@
       </b-row>
       <b-row class="mx-auto">
           <div cols="auto" class="mx-auto">
-            <img alt="" src="../assets/player-icons/image 5fire.png" class="resize mr-3" v-if="game.rejectCount >= 1">
+            <img alt="" src="../assets/player-icons/image 5fire.png" class="resize mr-3" v-if="room.rejectCount >= 1">
             <img alt="" src="../assets/player-icons/circle.png" class="resize mr-3" v-else>
-            <img alt="" src="../assets/player-icons/image 5fire.png" class="resize mx-auto" v-if="game.rejectCount >= 2">
+            <img alt="" src="../assets/player-icons/image 5fire.png" class="resize mx-auto" v-if="room.rejectCount >= 2">
             <img alt="" src="../assets/player-icons/circle.png" class="resize mx-auto" v-else>
-            <img alt="" src="../assets/player-icons/image 5fire.png" class="resize ml-3" v-if="game.rejectCount >= 3">
+            <img alt="" src="../assets/player-icons/image 5fire.png" class="resize ml-3" v-if="room.rejectCount >= 3">
             <img alt="" src="../assets/player-icons/circle.png" class="resize ml-3" v-else>
             </div>
       </b-row>
@@ -43,12 +43,12 @@
 
 export default {
   props: {
-    game: {
+    room: {
       type: Object,
       default: function () {
         return {
-          time: '10',
-          rejectCount: 2,
+          gamePhase: 5,
+          rejectCount: 0,
           mission: [
             { round: '1', text: '3', result: 0 },
             { round: '2', text: '3', result: -1 },
@@ -59,6 +59,32 @@ export default {
           currentMission: 0
         }
       }
+    }
+  },
+  data () {
+    return {
+      timeCounter: null
+    }
+  },
+  watch: {
+    gamePhase (newV, oldV) {
+      if (newV === 4 || newV === 5) {
+        var count = 10
+        var x = setInterval(() => {
+          this.timeCounter = count
+          count -= 1
+          if (count < -1) {
+            clearInterval(x)
+            this.timeCounter = null
+          }
+        }, 1000)
+      }
+      this.timeCounter = null
+    }
+  },
+  computed: {
+    gamePhase () {
+      return this.room.gamePhase
     }
   }
 }

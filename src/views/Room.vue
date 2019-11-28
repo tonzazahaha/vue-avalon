@@ -5,7 +5,7 @@
         <!-- room detail -->
         <template v-slot:room-detail>
           <room-header :roomName="room.roomName" :roomMode="room.roomMode" :players="room.players" :roomSize="room.roomSize" v-if="room.gamePhase === 0"></room-header>
-          <game-header :game="room.game" v-else></game-header>
+          <game-header :room="room" v-else></game-header>
         </template>
         <!-- room wrapper -->
         <template v-slot:room-wrapper>
