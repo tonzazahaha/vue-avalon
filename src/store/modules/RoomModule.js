@@ -79,7 +79,15 @@ const RoomModule = {
       return firebase.db.ref().update(update)
     },
     voteSuccess ({ commit }, payload) {
-      firebase.db.ref('rooms/' + payload.roomId + '/players/' + payload.userId).child('voteSuccess').set(payload.vote ? 1 : 0)
+      return new Promise((resolve, reject) => {
+        firebase.db.ref('rooms/' + payload.roomId + '/players/' + payload.userId).child('voteSuccess').set(payload.vote ? 1 : 0)
+          .then(res => {
+            resolve()
+          })
+          .catch(e => {
+            reject(e)
+          })
+      })
     }
   }
 }

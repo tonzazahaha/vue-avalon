@@ -1,15 +1,21 @@
 <template>
   <div class="mx-auto">
     <div v-if="room.gamePhase == 4">
-      <b-col cols="auto" class="mx-auto">
+      <b-col cols="auto" class="mx-auto" v-if="isVisible">
         <b-button variant="success" class="btn-vote mx-3">Approve</b-button>
         <b-button variant="danger" class="btn-vote mx-3">Reject</b-button>
       </b-col>
+      <b-col cols="auto" class="mx-auto" v-if="!isVisible">
+        <h3 class="text-grey">Waiting for another vote...</h3>
+      </b-col>
     </div>
     <div v-if="room.gamePhase == 5">
-      <b-col cols="auto" class="mx-auto">
+      <b-col cols="auto" class="mx-auto" v-if="isVisible">
         <b-button variant="success" class="btn-vote mx-3" @click="voteSuccess(true)">success</b-button>
         <b-button variant="danger" class="btn-vote mx-3" v-if="isCurrentUserBad" @click="voteSuccess(false)">Fail</b-button>
+      </b-col>
+      <b-col cols="auto" class="mx-auto" v-if="!isVisible">
+        <h3 class="text-grey">Waiting for another vote... </h3>
       </b-col>
     </div>
   </div>
@@ -18,6 +24,11 @@
 <script>
 
 export default {
+  data () {
+    return {
+      isVisible: true
+    }
+  },
   props: {
     room: {
       type: Object,
@@ -29,14 +40,24 @@ export default {
       }
     }
   },
+  watch: {
+    gamePhase (newPhase, oldPhase) {
+      this.checkPhase(newPhase)
+    }
+  },
+  created () {
+    this.checkPhase(this.gamePhase)
+  },
   computed: {
     user () {
       return this.$store.getters['Auth/getUser']
     },
+    gamePhase () {
+      return this.room.gamePhase
+    },
     isCurrentUserBad () {
       let playerIndex = this.room.players.findIndex(p => p.id === this.user.uid)
       if (playerIndex > -1) {
-        console.log('found')
         return this.room.players[playerIndex].role === 'bad'
       }
       return false
@@ -45,6 +66,21 @@ export default {
   methods: {
     voteSuccess (bool) {
       this.$store.dispatch('Room/voteSuccess', { roomId: this.$route.params.roomId, userId: this.user.uid, vote: bool })
+        .then(() => {
+          this.isVisible = false
+        })
+        .catch(e => {
+          alert(e)
+        })
+    },
+    checkPhase (phase) {
+      if (phase === 5) {
+        let playerIndex = this.room.players.findIndex(p => p.id === this.user.uid)
+        if (playerIndex > -1) {
+          this.isVisible = this.room.players[playerIndex].isSelected
+          console.log('work')
+        }
+      }
     }
   }
 }
