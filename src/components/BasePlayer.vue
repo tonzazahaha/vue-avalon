@@ -11,8 +11,8 @@
       <img v-if="isLeader" src="../assets/player-icons/crown.png" class="icon-leader" alt="">
       <img v-if="player.displayName == 'SatchanBNK48'" src="../assets/saturn.png" class="icon-leader" alt="">
     </div>
-    <div class="player-name">
-      {{ cutUsername }}
+    <div class="player-name" :class="{'isMe': player.id === user.uid}">
+      {{ cutUsername }} <span v-if="isHead">(head)</span>
     </div>
   </div>
 </template>
@@ -33,20 +33,30 @@ export default {
     isLeader: {
       type: Boolean,
       default: false
+    },
+    isHead: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     cutUsername () {
-      if (this.player.displayName !== '' && this.player.displayName.length >= 12) {
-        return `${this.player.displayName.slice(0, 12)}...`
+      if (this.player.displayName !== '' && this.player.displayName.length >= 10) {
+        return `${this.player.displayName.slice(0, 10)}...`
       }
       return this.player.displayName
+    },
+    user () {
+      return this.$store.getters['Auth/getUser']
     }
   }
 }
 </script>
 
 <style>
+.player .player-name.isMe {
+  color: yellow;
+}
 .player .player-image {
   position: relative;
 }

@@ -21,7 +21,13 @@
             @click="closeTab(i)"
           >close</em>
         </template>
-        <p class="px-3 mt-3">{{ tab.body }}</p>
+        <p class="mt-3">
+          <ul class="sidebar-list">
+            <li v-for="(e, index) in tab.body" :key="index">
+              [{{ toTimeFormat(e.time) }}] {{ e.text }}
+            </li>
+          </ul>
+        </p>
       </b-tab>
     </b-tabs>
   </div>
@@ -32,15 +38,31 @@ export default {
   data () {
     return {
       tabs: [
-        { title: '', canClose: false, icon: 'people', body: 'Online Users is unavailable.' },
-        { title: 'Chat', canClose: true, icon: 'chat_bubble', body: 'blkjlakjsdlfkjalskdjflkajsdlfkjalskdjflkajsdflk loremlsdfkjaslkjfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n\n\nlasjdlfkjalskdjflkajsdlfjalskdjlkjlkjljkjlkj]\nlaskdjfljsadlfkjlkjlkjlkjalksjfdlk Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32 The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.' }
-      ],
-      tabIndex: 0
+        { title: '', canClose: false, icon: 'people', body: [{ time: 0, text: 'Online player is unable' }] },
+        { title: 'Game Logs', canClose: true, icon: 'assignment_turned_in', body: [{ time: 1574835213228, text: 'game start' }, { time: 1574835429460, text: 'vsssssssssssssssssssssssssssssssssssssssssssssssssote' }] }
+      ]
     }
   },
   methods: {
     closeTab (index) {
       this.tabs.pop(index)
+    },
+    toTimeFormat (timestamp) {
+      if (timestamp === 0) {
+        return ''
+      } else {
+        return `${(new Date(timestamp)).getHours()}:${(new Date(timestamp).getMinutes())}`
+      }
+    }
+  },
+  computed: {
+    tabIndex: {
+      get () {
+        return this.$store.getters['Sidebar/getTabIndex']
+      },
+      set (value) {
+        this.$store.commit('Sidebar/SETTABINDEX', value)
+      }
     }
   }
 }
@@ -51,5 +73,12 @@ export default {
   overflow-y: auto;
   max-height: calc(100vh - 10rem);
   margin-top: 10px;
+}
+.sidebar-list {
+  list-style: none;
+  padding: 0 20px;
+}
+.sidebar-list li {
+  word-wrap: break-word;
 }
 </style>

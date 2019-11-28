@@ -4,34 +4,22 @@
       <layout-room v-if="room">
         <!-- room detail -->
         <template v-slot:room-detail>
-          <b-col cols="auto" align-self="center" class="ml-0">
-            <span>Room Name</span>
-            <h5>{{ room.roomName }}</h5>
-          </b-col>
-          <b-col cols="auto" align-self="center" class="ml-5">
-            <span>Mode</span>
-            <h5>{{ room.roomMode }}</h5>
-          </b-col>
-          <b-col cols="auto" align-self="center" class="ml-5">
-            <span>Size</span>
-            <h5>{{ room.players.length }}/{{ room.roomSize }}</h5>
-          </b-col>
-          <b-col align-self="center" cols="auto" class="ml-auto">
-            <h5><em class="material-icons pr-2">build</em> Setting</h5>
-          </b-col>
-          <b-col align-self="center" cols="auto" class="ml-autox">
-            <b-button variant="dark" class="px-5 bg-grey" @click="leaveRoom">Leave</b-button>
-          </b-col>
+          <room-header :roomName="room.roomName" :roomMode="room.roomMode" :players="room.players" :roomSize="room.roomSize" v-if="room.gamePhase === 0"></room-header>
+          <game-header :game="room.game" v-else></game-header>
         </template>
         <!-- room wrapper -->
         <template v-slot:room-wrapper>
-          <wrapper-room-player :players="room.players" :leader="leader"></wrapper-room-player>
+          <wrapper-room-player :players="room.players" :head="room.head" :leader="leader"></wrapper-room-player>
         </template>
         <!-- room footer -->
         <template v-slot:room-footer>
-          <b-col cols="auto" class="mx-auto">
-            <b-button variant="danger" class="btn-vote mx-3" @click="ingame">START</b-button>
+          <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && currentIsHead">
+            <b-button variant="danger" class="btn-vote mx-3" @click="startGame" :disabled="room.players.length<5">START</b-button>
           </b-col>
+          <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && !currentIsHead">
+            <h3 class="text-grey">Waiting for head's room start...</h3>
+          </b-col>
+          <game-footer :room="room" v-if="room.gamePhase !== 0"></game-footer>
         </template>
       </layout-room>
     </layout-main>
@@ -42,10 +30,13 @@
 import LayoutMain from '../components/LayoutMain'
 import LayoutRoom from '../components/LayoutRoom'
 import WrapperRoomPlayer from '../components/WrapperRoomPlayer'
+import RoomHeader from '../components/RoomHeader'
+import GameHeader from '../components/GameHeader'
+import GameFooter from '../components/GameFooter'
 
 export default {
   components: {
-    LayoutMain, LayoutRoom, WrapperRoomPlayer
+    LayoutMain, LayoutRoom, WrapperRoomPlayer, RoomHeader, GameHeader, GameFooter
   },
   data () {
     return {
@@ -56,7 +47,18 @@ export default {
         { id: '4', username: 'SatchanBNK48', photoUrl: 'https://media1.tenor.com/images/2bc6b4061aa554241e93c90ea7c62a45/tenor.gif?itemid=12499712https://media1.tenor.com/images/2bc6b4061aa554241e93c90ea7c62a45/tenor.gif?itemid=12499712' }
       ],
       leader: '1',
-      loading: false
+      loading: false,
+      gamePhase: 0,
+      time: '10',
+      rejectCount: 2,
+      mission: [
+        { round: '1', text: '3', result: 0 },
+        { round: '2', text: '3', result: -1 },
+        { round: '3', text: '3', result: -1 },
+        { round: '4', text: '3', result: -1 },
+        { round: '5', text: '4', result: -1 }
+      ],
+      currentMission: 0
     }
   },
   created () {
@@ -65,10 +67,9 @@ export default {
   methods: {
     leaveRoom () {
       this.$store.dispatch('Room/leaveRoom', { id: this.$route.params.roomId })
-      this.$router.push('/lobby')
     },
-    ingame () {
-      this.$router.push('/ingame')
+    startGame () {
+      this.$store.dispatch('Room/gameStart', { id: this.$route.params.roomId })
     }
   },
   computed: {
@@ -77,19 +78,20 @@ export default {
     },
     room () {
       return this.$store.getters['Room/getRoom']
+    },
+    currentIsHead () {
+      const playerIndex = this.room.players.findIndex(player => player.id === this.user.uid)
+      if (playerIndex > -1) {
+        return this.room.players[playerIndex].id === this.room.head
+      }
+      console.log('can not check currentIsHead')
+      return false
     }
   }
 }
 </script>
 
 <style>
-.room-detail {
-  color: white;
-}
-.room-detail span {
-  color: #e5e5e5;
-  opacity: .7;
-}
 .btn-vote {
   width: 130px;
   padding: 7px 0;

@@ -1,5 +1,6 @@
 import router from '../../router'
 import objToArr from '../../services/objToArr'
+import randomRole from '../../services/randomRole'
 
 const firebase = require('../../services/firebaseConfig')
 
@@ -58,7 +59,24 @@ const RoomModule = {
     },
     leaveRoom ({ commit, rootGetters }, payload) {
       const currentUser = rootGetters['Auth/getUser']
-      firebase.db.ref('rooms/' + payload.id + '/players').child(currentUser.uid).set(null)
+      firebase.db.ref('rooms/' + payload.id + '/players').child(currentUser.uid).remove()
+        .then(() => {
+          router.push('/lobby')
+        })
+    },
+    gameStart ({ commit, state }, payload) {
+      var update = {}
+      update['rooms/' + payload.id + '/gamePhase'] = 1
+      let players = [ ...state.room.players ]
+      let roles = randomRole(players.length)
+      for (let i = 0; i < players.length; i++) {
+        update['rooms/' + payload.id + '/players/' + players[i].id] = {
+          displayName: players[i].displayName,
+          photoURL: players[i].photoURL,
+          role: roles[i]
+        }
+      }
+      return firebase.db.ref().update(update)
     }
   }
 }

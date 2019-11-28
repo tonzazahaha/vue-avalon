@@ -1,4 +1,3 @@
-import { $api } from '@/services/api'
 import router from '../../router'
 const firebase = require('../../services/firebaseConfig')
 
@@ -58,27 +57,6 @@ const AuthModule = {
           })
           .catch(err => {
             reject(err)
-          })
-      })
-    },
-    fetchUser ({ commit, dispatch }, payload) {
-      return new Promise((resolve, reject) => {
-        if (!localStorage.getItem('access_token')) {
-          return resolve({ error: new Error('No token to authentication') })
-        }
-        $api({ path: '/user', method: 'get' })
-          .then(res => {
-            if (res.success) {
-              commit('SETUSER', res.userData)
-              resolve({ error: null })
-            } else {
-              dispatch('logout')
-              resolve({ error: new Error('response fail') })
-            }
-          })
-          .catch(err => {
-            dispatch('logout')
-            resolve({ error: err })
           })
       })
     },
