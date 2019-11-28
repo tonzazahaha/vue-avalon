@@ -7,9 +7,13 @@ const firebase = require('../../services/firebaseConfig')
 const RoomModule = {
   namespaced: true,
   state: {
-    room: null
+    room: null,
+    loading: false
   },
   getters: {
+    getLoading (state) {
+      return state.loading
+    },
     getRoom (state) {
       return state.room
     }
@@ -17,11 +21,14 @@ const RoomModule = {
   mutations: {
     SETROOM (state, payload) {
       state.room = payload
+    },
+    SETLOADING (state, payload) {
+      state.loading = payload
     }
   },
   actions: {
     joinRoom ({ dispatch, commit, rootGetters }, payload) {
-      // init socket
+      commit('SETLOADING', true)
       return firebase.db.ref('rooms').child(payload.id).once('value', snapshot => {
         if (snapshot.exists()) {
           if (snapshot.val().roomPassword === payload.password) {
@@ -41,6 +48,7 @@ const RoomModule = {
             }
             commit('SETROOM', temp)
             alert('join room')
+            commit('SETLOADING', false)
             dispatch('onRoomChange', payload)
           } else {
             alert('password wrong')

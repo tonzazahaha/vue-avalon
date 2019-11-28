@@ -1,7 +1,8 @@
 <template>
   <div class="room">
     <layout-main>
-      <layout-room v-if="room">
+      <b-spinner v-if="loading" variant="danger" class="loading" label="Large Spinner"></b-spinner>
+      <layout-room v-if="room && !loading">
         <!-- room detail -->
         <template v-slot:room-detail>
           <room-header :roomName="room.roomName" :roomMode="room.roomMode" :players="room.players" :roomSize="room.roomSize" v-if="room.gamePhase === 0"></room-header>
@@ -47,7 +48,6 @@ export default {
         { id: '4', username: 'SatchanBNK48', photoUrl: 'https://media1.tenor.com/images/2bc6b4061aa554241e93c90ea7c62a45/tenor.gif?itemid=12499712https://media1.tenor.com/images/2bc6b4061aa554241e93c90ea7c62a45/tenor.gif?itemid=12499712' }
       ],
       leader: '1',
-      loading: false,
       gamePhase: 0,
       time: '10',
       rejectCount: 2,
@@ -79,6 +79,9 @@ export default {
     room () {
       return this.$store.getters['Room/getRoom']
     },
+    loading () {
+      return this.$store.getters['Room/getLoading']
+    },
     currentIsHead () {
       const playerIndex = this.room.players.findIndex(player => player.id === this.user.uid)
       if (playerIndex > -1) {
@@ -95,5 +98,12 @@ export default {
 .btn-vote {
   width: 130px;
   padding: 7px 0;
+}
+.loading {
+  width: 4rem;
+  height: 4rem;
+  position: absolute;
+  top: 40%;
+  left: 50%;
 }
 </style>
