@@ -45,10 +45,6 @@ export default {
     gamePhase: {
       type: Number,
       default: 0
-    },
-    userRole: {
-      type: String,
-      default: 'good'
     }
   },
   computed: {
@@ -61,6 +57,14 @@ export default {
     },
     user () {
       return this.$store.getters['Auth/getUser']
+    },
+    userRole () {
+      const userIndex = this.players.findIndex(player => player.id === this.user.uid)
+      if (userIndex > -1) {
+        return this.players[userIndex].role
+      } else {
+        return 'good'
+      }
     }
   },
   methods: {

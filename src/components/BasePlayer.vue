@@ -1,18 +1,14 @@
 <template>
-  <div class="player" @click="player.isSelected = player.isSelected * (-1)">
-    <div class="player-image" :class="{'isEmpty': player.displayName === ''}">
-      <div v-if="player.role === 'bad' && gamePhase !== 0" class="player-image" :class="{'player-bad': player.role === 'bad' && player.displayName === 'SatchanBNK48'}">
+  <div class="player">
+    <div class="player-image" :class="{'isEmpty': player.displayName === ''}" @click="selectTeam()">
+      <div class="player-image" :class="{'player-bad': player.role === 'bad' && userRole === 'bad' && gamePhase !== 0}">
         <img :src="player.photoURL" class="player-image" :class="{'bg-grey': player.displayName !== ''}" alt="">
       </div>
-      <div v-else-if="player.displayName == 'SatchanBNK48'" class="player-image" :class="{'player-cute': player.displayName === 'SatchanBNK48'}">
-        <img :src="player.photoURL" class="player-image" :class="{'bg-grey': player.displayName !== ''}" alt="">
-      </div>
-      <img :src="player.photoURL" class="player-image" :class="{'bg-grey': player.displayName !== ''}" alt="" v-else>
       <img v-if="leader === player.id && gamePhase !== 0" src="../assets/player-icons/crown.png" class="icon-leader" alt="">
-      <img v-else-if="player.displayName == 'SatchanBNK48'" src="../assets/saturn.png" class="icon-leader" alt="">
+      <img v-if="player.isSelected === 1" src="../assets/player-icons/swords.png" class="icon-selected" alt="">
     </div>
     <div class="player-name" :class="{'isMe': player.id === user.uid}">
-      {{ cutUsername }} <span v-if="isHead">(head)</span>
+      {{ cutUsername }} <span v-if="isHead && gamePhase === 0">(head)</span>
     </div>
   </div>
 </template>
@@ -41,6 +37,10 @@ export default {
     gamePhase: {
       type: Number,
       default: 0
+    },
+    userRole: {
+      type: String,
+      default: 'good'
     }
   },
   computed: {
@@ -55,8 +55,10 @@ export default {
     }
   },
   methods: {
-    getRole (player, id) {
-      console.log(player)
+    selectTeam () {
+      if (this.user.uid === this.leader) {
+        this.player.isSelected = this.player.isSelected === 1 ? 0 : 1
+      }
     }
   }
 }
@@ -77,6 +79,14 @@ export default {
   box-shadow: none;
   transition: .3s all;
 }
+.player .player-image img.icon-selected {
+  position: absolute;
+  transform: scale(.35);
+  top: -50px;
+  left: 40px;
+  box-shadow: none;
+  transition: .3s all;
+}
 .player .player-image img {
   display: block;
   width: 120px;
@@ -85,9 +95,6 @@ export default {
 }
 .player-bad img {
   border: 5px solid red;
-}
-.player-cute img {
-  border: 5px solid pink;
 }
 .player .player-image.isEmpty img {
   background: transparent;
