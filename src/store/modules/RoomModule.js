@@ -33,8 +33,8 @@ const RoomModule = {
         if (snapshot.exists()) {
           if (snapshot.val().roomPassword === payload.password) {
             const temp = { ...snapshot.val() }
-            temp.players = objToArr(temp.players)
-            temp.missions = objToArr(temp.missions)
+            temp.players = objToArr(temp.players) || []
+            temp.missions = objToArr(temp.missions) || []
             const currentUser = rootGetters['Auth/getUser']
             const playerIndex = temp.players.findIndex(p => p.id === currentUser.uid)
             if (playerIndex <= -1) {
@@ -114,12 +114,12 @@ const RoomModule = {
     voteApprove ({ commit }, payload) {
       return new Promise((resolve, reject) => {
         firebase.db.ref('rooms/' + payload.roomId + '/players/' + payload.userId).child('voteApprove').set(payload.vote ? 1 : 0)
-        .then(res => {
-          resolve()
-        })
-        .catch(e => {
-          reject(e)
-        })
+          .then(res => {
+            resolve()
+          })
+          .catch(e => {
+            reject(e)
+          })
       })
     }
   }

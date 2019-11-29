@@ -84,7 +84,7 @@ export default {
     },
     voteApprove (bool) {
       this.$store.dispatch('Room/voteApprove', { roomId: this.$route.params.roomId, userId: this.user.uid, vote: bool })
-      .then(() => {
+        .then(() => {
           this.isVisible = false
         })
         .catch(e => {
