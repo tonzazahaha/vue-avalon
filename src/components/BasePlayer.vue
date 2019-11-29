@@ -1,9 +1,8 @@
 <template>
   <div class="player">
-    <div class="player-image" :class="{'isEmpty': player.displayName === ''}" @click="selectTeam()">
-      <div class="player-image" :class="{'player-bad': player.role === 'bad' && userRole === 'bad' && gamePhase !== 0}">
-        <img :src="player.photoURL" class="player-image" :class="{'bg-grey': player.displayName !== ''}" alt="">
-      </div>
+    <div class="player-image" :class="{'isEmpty': player.displayName === ''}">
+      <img v-if="player.displayName !== ''" :src="player.photoURL" class="player-image" :class="{'player-bad': player.role === 'bad' && userRole === 'bad' && gamePhase !== 0}" alt="" @click="selectTeam()">
+      <img v-else :src="player.photoURL" class="player-image" :class="{'bg-grey': player.displayName !== ''}" alt="">
       <img v-if="leader === player.id && gamePhase !== 0" src="../assets/player-icons/crown.png" class="icon-leader" alt="">
       <img v-if="player.isSelected === 1" src="../assets/player-icons/swords.png" class="icon-selected" alt="">
     </div>
@@ -41,6 +40,10 @@ export default {
     userRole: {
       type: String,
       default: 'good'
+    },
+    checkTeam: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
@@ -56,7 +59,7 @@ export default {
   },
   methods: {
     selectTeam () {
-      if (this.user.uid === this.leader) {
+      if (this.user.uid === this.leader && this.gamePhase !== 0) {
         this.player.isSelected = this.player.isSelected === 1 ? 0 : 1
       }
     }

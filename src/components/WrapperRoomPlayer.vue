@@ -13,6 +13,7 @@
         :leader="leader"
         :gamePhase="gamePhase"
         :userRole="userRole"
+        :checkTeam="checkTeam"
       ></base-player>
     </b-col>
   </b-row>
@@ -43,6 +44,10 @@ export default {
       default: ''
     },
     gamePhase: {
+      type: Number,
+      default: 0
+    },
+    checkTeam: {
       type: Number,
       default: 0
     }

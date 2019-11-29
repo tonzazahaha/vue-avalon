@@ -10,7 +10,7 @@
         </template>
         <!-- room wrapper -->
         <template v-slot:room-wrapper>
-          <wrapper-room-player :players="room.players" :head="room.head" :leader="room.leader" :gamePhase="room.gamePhase"></wrapper-room-player>
+          <wrapper-room-player :players="room.players" :head="room.head" :leader="room.leader" :gamePhase="room.gamePhase" :checkTeam="checkTeam"></wrapper-room-player>
         </template>
         <!-- room footer -->
         <template v-slot:room-footer>
@@ -89,6 +89,12 @@ export default {
       }
       console.log('can not check currentIsHead')
       return false
+    },
+    checkTeam () {
+      const user = this.room.players.filter(player => {
+        return player.isSelected > 0
+      })
+      return user.length
     }
   }
 }
