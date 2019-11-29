@@ -173,18 +173,26 @@ exports.autoRemoveRoom = functions.database.ref('/rooms/{roomID}/players/{player
     })
 })
 
-exports.nextLeader = functions.database.ref('/rooms/{roomID}/gamePhase').onUpdate((snapshot, context) => {
-  console.log(context)
+exports.nextLeader = functions.database.ref('/rooms/{roomID}/gamePhase').onUpdate(async (snapshot) => {
+  console.log(snapshot)
   if (snapshot.after._data === 2) {
-    var leader = snapshot.after.ref.parent.child('leader')
-    var player = snapshot.after.ref.parent.child('players')
-    return player.once('value', sp => {
-      var leaderID = leader.once('value', sp => {
-        return sp
-      })
-      console.log(leaderID)
-      
-    }) 
+    const playerRef = snapshot.after.ref.parent.child('players')
+    const leaderRef = snapshot.after.ref.parent.child('leader')
+    const players = await playerRef.once('value')
+    const leader = await leaderRef.once('value')
+    var temp = [];
+    let i = 0;
+    let index = 0;
+    players.forEach(e => {
+        temp.push(e.key);
+        if (temp[i] === leader.val()) {
+            i = i + 1;
+            index = i;
+        }
+        i = i + 1;
+    });
+    const next = index % temp.length
+    return await leaderRef.set(temp[next])
   }
   return null
 })
