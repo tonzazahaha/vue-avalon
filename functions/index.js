@@ -216,3 +216,50 @@ exports.checkRejectCount = functions.database.ref('/rooms/{roomID}/rejectCount')
     console.log('less than 3');
     return null;
 })
+
+// check if game phase is 6 then check result who team win
+exports.checkEndGame = functions.database.ref('/rooms/{roomID}/gamePhase').onUpdate(async (snap) => {
+    const gamePhase = snap.after.ref;
+    const gamePhaseData = await gamePhase.once('value');
+
+    const currentMission = gamePhase.parent.child('currentMission');
+    const currentMissionData = await currentMission.once('value');
+
+    const missions = gamePhase.parent.child('missions');
+    const missionsData = await missions.once('value');
+
+    const win = gamePhase.parent.child('win');
+
+    if (gamePhaseData.val() === 6) {
+        // if phase 6
+        if (currentMissionData.val() === 5) {
+            // if last mission then calculate the team who win by counting the mission result
+            let success = 0;
+            let fail = 0;
+            // count success fail
+            missionsData.forEach(mission => {
+                if (mission.val().result === 1) {
+                    success += 1;
+                } else if (mission.val().result === 0){
+                    fail += 1;
+                }
+            })
+
+            if (success > fail) {
+                // if succes more than fail good team win
+                return win.set('good');
+            } else {
+                // else bad team win
+                return win.set('bad')
+            }
+
+        } else {
+            // if not last mission then go to next mission and set phase to 2 (assign new leader)
+            await currentMission.transaction(current => {
+                return (current || 0) + 1;
+            })
+            return gamePhase.set(2);
+        }
+    }
+    return null;
+})
