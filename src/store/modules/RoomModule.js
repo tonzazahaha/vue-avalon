@@ -1,7 +1,6 @@
 import router from '../../router'
 import objToArr from '../../services/objToArr'
 import randomRole from '../../services/randomRole'
-import { resolve } from 'dns'
 
 const firebase = require('../../services/firebaseConfig')
 
