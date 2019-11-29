@@ -1,8 +1,8 @@
 const functions = require('firebase-functions');
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
+// Create and Deploy Your First Cloud Functions
+// https://firebase.google.com/docs/functions/write-firebase-functions
+
 exports.countApprove = functions.database.ref('/rooms/{roomID}/players/{playID}/voteApprove').onWrite(
     async (change) => {
         const collectionRef = change.after.ref.parent;
@@ -187,4 +187,32 @@ exports.nextLeader = functions.database.ref('/rooms/{roomID}/gamePhase').onUpdat
     }) 
   }
   return null
+})
+
+// check if reject 3 times that mission is fail and next to new mission
+exports.checkRejectCount = functions.database.ref('/rooms/{roomID}/rejectCount').onUpdate(async (snap) => {
+    const rejectCount = snap.after.ref;
+    const currentMission = rejectCount.parent.child('currentMission');
+    const gamePhase = rejectCount.parent.child('gamePhase');
+
+    const rejectCountData = await rejectCount.once('value');
+    if (rejectCountData.val() === 3) {
+        const currentMissionData = await currentMission.once('value');
+        const mission = rejectCount.parent.child('missions/' + currentMissionData.val() + '/result')
+        await mission.set(0) // set mission fail
+        await rejectCount.set(0) // reset reject count
+
+        if (currentMissionData.val() < 5) {
+            // if not last mission then set to next mission
+            await currentMission.transaction(current => {
+                return (current || 0) + 1;
+            })
+            return await gamePhase.set(2);
+        } else {
+            // if last mission then set to last game phase for check team win
+            return await gamePhase.set(6);
+        }
+    }
+    console.log('less than 3');
+    return null;
 })
