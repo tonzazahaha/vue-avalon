@@ -49,6 +49,9 @@ export default {
         return `${this.player.displayName.slice(0, 10)}...`
       }
       return this.player.displayName
+    },
+    user () {
+      return this.$store.getters['Auth/getUser']
     }
   },
   methods: {

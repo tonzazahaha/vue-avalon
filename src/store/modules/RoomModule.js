@@ -27,14 +27,14 @@ const RoomModule = {
     }
   },
   actions: {
-    joinRoom ({ dispatch, commit, rootGetters }, payload) {
+    joinRoom ({ dispatch, commit, rootGetters, state }, payload) {
       commit('SETLOADING', true)
       return firebase.db.ref('rooms').child(payload.id).once('value', snapshot => {
         if (snapshot.exists()) {
           if (snapshot.val().roomPassword === payload.password) {
             const temp = { ...snapshot.val() }
-            temp.players = objToArr(temp.players) || []
-            temp.missions = objToArr(temp.missions) || []
+            temp.players = temp.players ? objToArr(temp.players) : []
+            temp.missions = temp.missions ? objToArr(temp.missions) : []
             const currentUser = rootGetters['Auth/getUser']
             const playerIndex = temp.players.findIndex(p => p.id === currentUser.uid)
             if (playerIndex <= -1) {
@@ -62,8 +62,8 @@ const RoomModule = {
     onRoomChange ({ commit }, payload) {
       firebase.db.ref('rooms').child(payload.id).on('value', snapshot => {
         const temp = { ...snapshot.val() }
-        temp.players = objToArr(temp.players)
-        temp.missions = objToArr(temp.missions)
+        temp.players = temp.players ? objToArr(temp.players) : []
+        temp.missions = temp.missions ? objToArr(temp.missions) : []
         commit('SETROOM', temp)
       })
     },
@@ -74,7 +74,7 @@ const RoomModule = {
           router.push('/lobby')
         })
     },
-    gameStart ({ commit, state }, payload) {
+    gameStart ({ state }, payload) {
       var update = {}
       update['rooms/' + payload.id + '/gamePhase'] = 1
       let players = [ ...state.room.players ]
