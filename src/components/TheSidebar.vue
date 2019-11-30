@@ -38,8 +38,8 @@ export default {
   data () {
     return {
       tabs: [
-        { title: '', canClose: false, icon: 'people', body: [{ time: 0, text: 'Online player is unable' }] },
-        { title: 'Game Logs', canClose: true, icon: 'assignment_turned_in', body: [{ time: 1574835213228, text: 'game start' }, { time: 1574835429460, text: 'vsssssssssssssssssssssssssssssssssssssssssssssssssote' }] }
+        { title: '', canClose: false, icon: 'people', body: [{ time: 0, text: 'Online player is unavailable!' }] },
+        { title: 'Game Logs', canClose: true, icon: 'assignment_turned_in', body: [{ time: 1574835213228, text: 'game start' }, { time: 1574835429460, text: 'Game log is unavailable!' }] }
       ]
     }
   },
