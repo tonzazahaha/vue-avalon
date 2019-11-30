@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     selectTeam () {
-      if (this.user.uid === this.leader && this.gamePhase === 2) {
+      if (this.user.uid === this.leader && this.gamePhase === 3) {
         this.player.isSelected = this.player.isSelected === 1 ? 0 : 1
       }
     }
