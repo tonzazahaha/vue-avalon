@@ -76,6 +76,11 @@ export default {
           if (count < -1) {
             clearInterval(x)
             this.timeCounter = null
+            if (this.gamePhase === 4) {
+              this.$store.dispatch('Room/voteApprove', { roomId: this.$route.params.roomId, userId: this.user.uid, vote: true })
+            } else if (this.gamePhase === 5) {
+              this.$store.dispatch('Room/voteSuccess', { roomId: this.$store.params.roomId, userId: this.user.uid, vote: true })
+            }
           }
         }, 1000)
       }
@@ -85,6 +90,9 @@ export default {
   computed: {
     gamePhase () {
       return this.room.gamePhase
+    },
+    user () {
+      return this.$store.getters['Auth/getUser']
     }
   }
 }
