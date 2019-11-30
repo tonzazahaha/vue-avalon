@@ -2,7 +2,7 @@
   <div class="mx-auto">
     <div v-if="room.gamePhase === 3">
       <b-col cols="auto" class="mx-auto" v-if="isVisible">
-        <b-button variant="success" class="btn-vote mx-3" @click="confirmTeam">Confirm Team</b-button>
+        <b-button variant="success" class="btn-vote mx-3" @click="confirmTeam" :disabled="selectedTeam !== 3">Confirm Team</b-button>
       </b-col>
       <b-col cols="auto" class="mx-auto" v-if="!isVisible">
         <h3 class="text-grey">Waiting for leader select team...</h3>
@@ -69,12 +69,18 @@ export default {
         return this.room.players[playerIndex].role === 'bad'
       }
       return false
+    },
+    selectedTeam () {
+      return this.room.players.filter(player => player.isSelected).length
     }
   },
   methods: {
     confirmTeam () {
-      const selected = this.room.players.filter(player => player.isSelected)
-      console.log(selected.length)
+      if (this.selectedTeam !== 3) {
+        alert('This mission require 3 players!!')
+      } else {
+        this.$store.dispatch('Room/confirmSelectedPlayer', { roomId: this.$route.params.roomId })
+      }
     },
     voteSuccess (bool) {
       this.$store.dispatch('Room/voteSuccess', { roomId: this.$route.params.roomId, userId: this.user.uid, vote: bool })

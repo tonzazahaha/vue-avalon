@@ -69,7 +69,7 @@ export default {
   watch: {
     gamePhase (newV, oldV) {
       if (newV === 4 || newV === 5) {
-        var count = 10
+        var count = 20
         var x = setInterval(() => {
           this.timeCounter = count
           count -= 1
