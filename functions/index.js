@@ -95,7 +95,7 @@ exports.calculateVoteSuccess = functions.database.ref('/rooms/{roomID}/countTota
         const missions = countTotalSuccess.parent.child('missions');//missions
         countTotalSuccess.once('value', sh => {
             countPlayer.once('value', bb => {
-                if (sh.val() === bb.numChildren()) {
+                if (sh.val() === 3) {
                     let success = 0;
                     let fail = 0;
                     bb.forEach(gg => {
