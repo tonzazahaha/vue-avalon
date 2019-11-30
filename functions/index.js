@@ -55,6 +55,7 @@ exports.calculateVoteApprove = functions.database.ref('/rooms/{roomID}/countTota
                         countPlayer.once('value', players => {
                             players.forEach(player => {
                                 countTotalApprove.parent.child('players/' + player.key + '/voteApprove').set(null);
+                                countTotalApprove.parent.child('players/' + player.key + '/isSelected').set(0);
                             })
                         })
                         countTotalApprove.set(null);
