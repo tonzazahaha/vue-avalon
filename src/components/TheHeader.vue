@@ -2,7 +2,7 @@
   <b-navbar variant="dark" type="dark" class="sticky-top" >
     <b-navbar-brand to="/" class="ml-2">
       <img
-        src="../assets/player-icons/knight.png"
+        src="https://image.flaticon.com/icons/svg/1198/1198921.svg"
         class="d-inline-block align-top pr-3"
         alt="knight"
       >
