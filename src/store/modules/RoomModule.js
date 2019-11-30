@@ -99,7 +99,8 @@ const RoomModule = {
         }
       }
       firebase.db.ref().update(mission)
-      firebase.db.ref('rooms/' + payload.id + '/currentMission').set(3)
+      firebase.db.ref('rooms/' + payload.id + '/gamePhase').set(3)
+      firebase.db.ref('rooms/' + payload.id + '/currentMission').set(1)
     },
     voteSuccess ({ commit }, payload) {
       return new Promise((resolve, reject) => {
