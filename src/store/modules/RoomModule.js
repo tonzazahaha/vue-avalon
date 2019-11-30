@@ -121,6 +121,18 @@ const RoomModule = {
             reject(e)
           })
       })
+    },
+    async confirmSelectedPlayer ({ state }, payload) {
+      let sel = {}
+      let selectedPlayer = await state.room.players.filter(player => player.isSelected)
+      console.log(selectedPlayer)
+      for (let i = 0; i < selectedPlayer.length; i++) {
+        sel['rooms/' + payload.roomId + '/players/' + selectedPlayer[i].id] = {
+          ...selectedPlayer[i]
+        }
+      }
+      firebase.db.ref().update(sel)
+      return firebase.db.ref('rooms/' + payload.roomId + '/gamePhase').set(4)
     }
   }
 }

@@ -10,7 +10,7 @@
         </template>
         <!-- room wrapper -->
         <template v-slot:room-wrapper>
-          <wrapper-room-player :players="room.players" :head="room.head" :leader="room.leader" :gamePhase="room.gamePhase" :checkTeam="checkTeam"></wrapper-room-player>
+          <wrapper-room-player :players="room.players" :head="room.head" :leader="room.leader" :gamePhase="room.gamePhase"></wrapper-room-player>
         </template>
         <!-- room footer -->
         <template v-slot:room-footer>
@@ -19,9 +19,6 @@
           </b-col>
           <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 0 && !currentIsHead">
             <h3 class="text-grey">Waiting for head's room start...</h3>
-          </b-col>
-          <b-col cols="auto" class="mx-auto" v-if="room.gamePhase === 3 && currentIsLeader">
-            <b-button variant="danger" class="btn-vote mx-3" @click="confirmTeam" :disabled="room.players.length<5 || !selectDone">Confirm Team</b-button>
           </b-col>
           <game-footer :room="room" v-if="room.gamePhase !== 0"></game-footer>
         </template>
@@ -169,20 +166,6 @@ export default {
         return this.room.players[playerIndex].id === this.room.leader
       }
       console.log('can not check currentIsLeader')
-      return false
-    },
-    checkTeam () {
-      const user = this.room.players.filter(player => {
-        return player.isSelected > 0
-      })
-      return user.length
-    },
-    playerWin () {
-      const playerIndex = this.room.players.findIndex(player => player.id === this.user.uid)
-      if (playerIndex > -1) {
-        return this.room.players[playerIndex].role === this.room.win
-      }
-      console.log('can not check playerWin')
       return false
     }
   }
