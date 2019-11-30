@@ -95,7 +95,7 @@ exports.calculateVoteSuccess = functions.database.ref('/rooms/{roomID}/countTota
         const missions = countTotalSuccess.parent.child('missions');//missions
         countTotalSuccess.once('value', sh => {
             countPlayer.once('value', bb => {
-                if (sh.val() === bb.numChildren()) {
+                if (sh.val() === 3) {
                     let success = 0;
                     let fail = 0;
                     bb.forEach(gg => {
@@ -238,6 +238,9 @@ exports.checkEndGame = functions.database.ref('/rooms/{roomID}/gamePhase').onUpd
     const missions = gamePhase.parent.child('missions');
     const missionsData = await missions.once('value');
 
+    const players = gamePhase.parent.child('players');
+    const playersData = await players.once('value');
+
     const win = gamePhase.parent.child('win');
 
     if (gamePhaseData.val() === 6) {
@@ -268,6 +271,11 @@ exports.checkEndGame = functions.database.ref('/rooms/{roomID}/gamePhase').onUpd
             await currentMission.transaction(current => {
                 return (current || 0) + 1;
             })
+            // re selected team
+            playersData.forEach(player => {
+                players.child(player.key + '/isSelected').set(0);
+            })
+
             return gamePhase.set(2);
         }
     }

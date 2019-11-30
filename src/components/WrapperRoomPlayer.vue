@@ -14,6 +14,7 @@
         :gamePhase="gamePhase"
         :userRole="userRole"
         :checkTeam="checkTeam"
+        :index="index"
       ></base-player>
     </b-col>
   </b-row>

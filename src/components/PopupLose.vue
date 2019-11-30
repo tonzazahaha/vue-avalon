@@ -1,7 +1,7 @@
 <template>
     <div class="popup">
   <!-- win -->
-    <b-modal
+    <!-- <b-modal
       centered
       ref="my-modal"
       v-model="showWin"
@@ -25,7 +25,7 @@
             <b-button class="mt-3" variant="outline-primary" @click="hideModal">OK</b-button>
           </b-col>
         </b-row>
-    </b-modal>
+    </b-modal> -->
 
 <!-- lose -->
     <b-modal
@@ -59,11 +59,14 @@
 
 <script>
 export default {
-    data () {
+  data () {
     return {
-      showWin: false,
+      showWin: true,
       showLose: false
     }
+  },
+  props: {
+    gamePhase: Number
   },
   methods: {
     hideModal () {
