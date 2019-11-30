@@ -4,7 +4,7 @@
       <img v-if="player.displayName !== ''"
         alt=""
         :src="player.photoURL" class="player-image"
-        :class="[{'player-bad': player.role === 'bad' && userRole === 'bad' && gamePhase !== 0},{'canSelect': room.leader === user.uid}]"
+        :class="[{'player-bad': player.role === 'bad' && userRole === 'bad' && gamePhase !== 0},{'canSelect': room.leader === user.uid}, {'player-good': user.displayName === player.displayName && userRole === 'good' && gamePhase !== 0}]"
       >
       <img v-else :src="player.photoURL" class="player-image" :class="{'bg-grey': player.displayName !== ''}" alt="">
       <img v-if="leader === player.id && gamePhase !== 0" src="../assets/player-icons/crown.png" class="icon-leader" alt="">
@@ -109,6 +109,9 @@ export default {
 }
 img.player-bad {
   border: 5px solid red;
+}
+img.player-good {
+  border: 5px solid green;
 }
 .player .player-image.isEmpty img {
   background: transparent;
