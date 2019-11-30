@@ -112,25 +112,25 @@ exports.calculateVoteSuccess = functions.database.ref('/rooms/{roomID}/countTota
                             console.log('===================> ' + v.val() + '================>' + v.key);
                             missions.parent.child('missions/' + v.val() + '/result').set(1);
                         })
-                        gamePhase.set(6);
                         countTotalSuccess.set(null);
                         countPlayer.once('value', players => {
                             players.forEach(player => {
                                 countTotalSuccess.parent.child('players/' + player.key + '/voteSuccess').set(null);
                             })
                         })
+                        gamePhase.set(6);
                     }
                     else if (fail>0) {
                         currentMission.once('value', v => {
                             console.log('===================> ' + v.val() + '================>' + v.key);
                             missions.parent.child('missions/' + v.val() + '/result').set(0);
                         })
-                        gamePhase.set(6);
                         countPlayer.once('value', players => {
                             players.forEach(player => {
                                 countTotalApprove.parent.child('players/' + player.key + '/voteSuccess').set(null);
                             })
                         })
+                        gamePhase.set(6);
                         countTotalSuccess.set(null);
                     }
                 }
