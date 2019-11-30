@@ -107,7 +107,7 @@ export default {
   height: 120px;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.15), -5px -5px 20px rgba(0, 0, 0, 0.15);
 }
-.player-bad img {
+img.player-bad {
   border: 5px solid red;
 }
 .player .player-image.isEmpty img {
