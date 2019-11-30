@@ -42,7 +42,7 @@
       footer-bg-variant="secondary"
       footer-border-variant="secondary"
       hide-footer title= "Using Component Methods"
-      v-if="room.gamePhase === 6 && room.currentMission === 5 && playerWin"
+      v-if="room.gamePhase === 6 && playerWin"
     >
       <template v-slot:modal-header class="mx-auto">
         <h5 class="mx-auto">YOU WIN!</h5>
@@ -69,7 +69,7 @@
       footer-bg-variant="secondary"
       footer-border-variant="secondary"
       hide-footer title= "Using Component Methods"
-      v-if="room.gamePhase === 6 && room.currentMission === 5 && !playerWin"
+      v-if="room.gamePhase === 6 && !playerWin"
     >
       <template v-slot:modal-header class="mx-auto">
         <h5 class="mx-auto">YOU LOSE!</h5>
