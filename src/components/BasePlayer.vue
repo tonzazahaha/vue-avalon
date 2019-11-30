@@ -1,6 +1,6 @@
 <template>
   <div class="player">
-    <div class="player-image" :class="{'isEmpty': player.displayName === ''}">
+    <div class="player-image" :class="{'isEmpty': player.displayName === ''}" @click="select">
       <img v-if="player.displayName !== ''"
         alt=""
         :src="player.photoURL" class="player-image"
@@ -23,6 +23,9 @@ export default {
     }
   },
   props: {
+    index: {
+      type: Number
+    },
     leader: {
       type: String,
       default: 'error'
@@ -58,6 +61,11 @@ export default {
     },
     room () {
       return this.$store.getters['Room/getRoom']
+    }
+  },
+  methods: {
+    select () {
+      this.$store.dispatch('Room/selectPlayer', { index: this.index })
     }
   }
 }

@@ -24,6 +24,9 @@ const RoomModule = {
     },
     SETLOADING (state, payload) {
       state.loading = payload
+    },
+    SETPLAYERSELECTED (state, payload) {
+      state.room.players[payload.index]['isSelected'] = 1
     }
   },
   actions: {
@@ -121,6 +124,9 @@ const RoomModule = {
             reject(e)
           })
       })
+    },
+    selectPlayer ({ commit }, payload) {
+      commit('SETPLAYERSELECTED', payload)
     }
   }
 }
