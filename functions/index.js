@@ -236,6 +236,9 @@ exports.checkEndGame = functions.database.ref('/rooms/{roomID}/gamePhase').onUpd
     const missions = gamePhase.parent.child('missions');
     const missionsData = await missions.once('value');
 
+    const players = gamePhase.parent.child('players');
+    const playersData = await players.once('value');
+
     const win = gamePhase.parent.child('win');
 
     if (gamePhaseData.val() === 6) {
@@ -266,6 +269,11 @@ exports.checkEndGame = functions.database.ref('/rooms/{roomID}/gamePhase').onUpd
             await currentMission.transaction(current => {
                 return (current || 0) + 1;
             })
+            // re selected team
+            playersData.forEach(player => {
+                players.child(player.key + '/isSelected').set(0);
+            })
+
             return gamePhase.set(2);
         }
     }
