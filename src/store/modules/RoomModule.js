@@ -85,7 +85,8 @@ const RoomModule = {
         update['rooms/' + payload.id + '/players/' + players[i].id] = {
           displayName: players[i].displayName,
           photoURL: players[i].photoURL,
-          role: roles[i]
+          role: roles[i],
+          isSelected: 0
         }
       }
       firebase.db.ref().update(update)
@@ -98,7 +99,7 @@ const RoomModule = {
         }
       }
       firebase.db.ref().update(mission)
-      firebase.db.ref('rooms/' + payload.id + '/currentMission').set(1)
+      firebase.db.ref('rooms/' + payload.id + '/currentMission').set(3)
     },
     voteSuccess ({ commit }, payload) {
       return new Promise((resolve, reject) => {
