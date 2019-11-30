@@ -137,9 +137,11 @@ export default {
     },
     hideModal () {
       this.$refs['my-modal'].hide()
+      this.$store.dispatch('Room/leaveRoom', { id: this.$route.params.roomId })
     },
     hideModal1 () {
       this.$refs['my-modal1'].hide()
+      this.$store.dispatch('Room/leaveRoom', { id: this.$route.params.roomId })
     }
   },
   computed: {
