@@ -127,7 +127,7 @@ exports.calculateVoteSuccess = functions.database.ref('/rooms/{roomID}/countTota
                         })
                         countPlayer.once('value', players => {
                             players.forEach(player => {
-                                countTotalApprove.parent.child('players/' + player.key + '/voteSuccess').set(null);
+                                countTotalSuccess.parent.child('players/' + player.key + '/voteSuccess').set(null);
                             })
                         })
                         gamePhase.set(6);
