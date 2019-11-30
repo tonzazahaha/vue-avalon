@@ -25,8 +25,70 @@
           </b-col>
           <game-footer :room="room" v-if="room.gamePhase !== 0"></game-footer>
         </template>
+        <!-- End game -->
+        <!-- <template v-slot:popup>
+          <popup-win v-if="room.gamePhase == 6 && room.currentMission == 5"></popup-win>
+          <popup-lose v-if="room.gamePhase == 9"></popup-lose>
+        </template> -->
+
       </layout-room>
     </layout-main>
+    <div class="popup">
+      <!-- win -->
+      <b-modal
+      centered
+      ref="my-modal"
+      v-model="showWin"
+      header-bg-variant="secondary"
+      header-border-variant="secondary"
+      body-bg-variant="secondary"
+      footer-bg-variant="secondary"
+      footer-border-variant="secondary"
+      hide-footer title= "Using Component Methods"
+      v-if="room.gamePhase === 6 && room.currentMission === 5 && playerWin"
+    >
+      <template v-slot:modal-header class="mx-auto">
+        <h5 class="mx-auto">YOU WIN!</h5>
+      </template>
+        <b-row align-h="center">
+          <b-col cols='auto'>
+            <img src="../assets/win.png" alt="win">
+          </b-col>
+        </b-row>
+        <b-row align-h="center">
+          <b-col cols='auto'>
+            <b-button class="mt-3" variant="outline-primary" @click="hideModal">OK</b-button>
+          </b-col>
+        </b-row>
+    </b-modal>
+    <!-- lose -->
+    <b-modal
+      centered
+      ref="my-modal1"
+      v-model="showLose"
+      header-bg-variant="secondary"
+      header-border-variant="secondary"
+      body-bg-variant="secondary"
+      footer-bg-variant="secondary"
+      footer-border-variant="secondary"
+      hide-footer title= "Using Component Methods"
+      v-if="room.gamePhase === 6 && room.currentMission === 5 && !playerWin"
+    >
+      <template v-slot:modal-header class="mx-auto">
+        <h5 class="mx-auto">YOU LOSE!</h5>
+      </template>
+      <b-row align-h="center">
+          <b-col cols='auto'>
+            <img src="../assets/lose.png" alt="lose">
+          </b-col>
+        </b-row>
+        <b-row align-h="center">
+          <b-col cols='auto'>
+            <b-button class="mt-3" variant="outline-primary" @click="hideModal1">OK</b-button>
+          </b-col>
+        </b-row>
+    </b-modal>
+    </div>
   </div>
 </template>
 
@@ -61,7 +123,9 @@ export default {
         { round: '4', text: '3', result: -1 },
         { round: '5', text: '4', result: -1 }
       ],
-      currentMission: 0
+      currentMission: 0,
+      showWin: true,
+      showLose: true
     }
   },
   created () {
@@ -73,6 +137,12 @@ export default {
     },
     startGame () {
       this.$store.dispatch('Room/gameStart', { id: this.$route.params.roomId })
+    },
+    hideModal () {
+      this.$refs['my-modal'].hide()
+    },
+    hideModal1 () {
+      this.$refs['my-modal1'].hide()
     }
   },
   computed: {
@@ -101,19 +171,19 @@ export default {
       console.log('can not check currentIsLeader')
       return false
     },
-    selectDone () {
-      const a = 0
-      if (a) {
-        return true
-      } else {
-        return false
-      }
-    },
     checkTeam () {
       const user = this.room.players.filter(player => {
         return player.isSelected > 0
       })
       return user.length
+    },
+    playerWin () {
+      const playerIndex = this.room.players.findIndex(player => player.id === this.user.uid)
+      if (playerIndex > -1) {
+        return this.room.players[playerIndex].role === this.room.win
+      }
+      console.log('can not check playerWin')
+      return false
     }
   }
 }
