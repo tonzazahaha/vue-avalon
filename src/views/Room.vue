@@ -171,11 +171,11 @@ export default {
       return false
     },
     playerWin () {
-      const playerIndex = this.room.players.findIndex(player => player.id === this.user.id)
+      const playerIndex = this.room.players.findIndex(player => player.id === this.user.uid)
       if (playerIndex > -1) {
         return this.room.players[playerIndex].role === this.room.win
       }
-      alert('not found user to alert win')
+      console.log('not found user to alert win')
       return false
     }
   }
