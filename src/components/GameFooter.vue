@@ -9,7 +9,7 @@
       </b-col>
     </div>
     <div v-if="room.gamePhase === 4">
-      <b-col cols="12">
+      <b-col cols="12" v-if="isVisible">
         <h5 class="text-grey text-center">Leader select:
           <span v-for="(p, index) in selectedTeam" :key="index">{{ p.displayName }}, </span>
         </h5>
@@ -104,6 +104,9 @@ export default {
         } else {
           this.isVisible = false
         }
+      }
+      else if (phase === 4) {
+        this.isVisible = true
       } else if (phase === 5) {
         if (playerIndex > -1) {
           this.isVisible = this.room.players[playerIndex].isSelected
