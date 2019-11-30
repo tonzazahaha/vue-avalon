@@ -17,7 +17,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
-    - name: Install Depen
+    - name: Install Dependency
       run: npm install      
     - name: Build
       run: npm run build      
