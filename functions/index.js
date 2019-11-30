@@ -29,7 +29,7 @@ exports.calculateVoteApprove = functions.database.ref('/rooms/{roomID}/countTota
         const rejectCount = countTotalApprove.parent.child('rejectCount')
         countTotalApprove.once('value', sh => {
             countPlayer.once('value', bb => {
-                if (sh.val() === bb.numChildren()) {
+                if (sh.val() >= bb.numChildren()) {
                     let approve = 0;
                     let reject = 0;
                     bb.forEach(gg => {
