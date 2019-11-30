@@ -63,18 +63,21 @@ export default {
   },
   data () {
     return {
-      timeCounter: null
+      timeCounter: null,
+      x: null
     }
   },
   watch: {
     gamePhase (newV, oldV) {
       if (newV === 4 || newV === 5) {
         var count = 20
-        var x = setInterval(() => {
+        this.timeCounter = null
+        clearInterval(this.x)
+        this.x = setInterval(() => {
           this.timeCounter = count
           count -= 1
           if (count < -1) {
-            clearInterval(x)
+            clearInterval(this.x)
             this.timeCounter = null
             if (this.gamePhase === 4) {
               this.$store.dispatch('Room/voteApprove', { roomId: this.$route.params.roomId, userId: this.user.uid, vote: true })
