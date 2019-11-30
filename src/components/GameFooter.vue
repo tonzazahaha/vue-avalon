@@ -104,8 +104,7 @@ export default {
         } else {
           this.isVisible = false
         }
-      }
-      else if (phase === 4) {
+      } else if (phase === 4) {
         this.isVisible = true
       } else if (phase === 5) {
         if (playerIndex > -1) {
