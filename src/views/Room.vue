@@ -46,12 +46,12 @@
     >
       <template v-slot:modal-header class="mx-auto">
         <h5 v-if="playerWin === true" class="mx-auto">YOU WIN!</h5>
-        <h5 v-else class="mx-auto">YOU LOSE!</h5>
+        <h5 v-if="playerWin === false" class="mx-auto">YOU LOSE!</h5>
       </template>
         <b-row align-h="center">
           <b-col cols='auto'>
-            <img v-if="playerWin" src="../assets/win.png" alt="win">
-            <img v-if="playerWin" src="../assets/lose.png" alt="lose">
+            <img v-if="playerWin === true" src="../assets/win.png" alt="win">
+            <img v-if="playerwin === false" src="../assets/lose.png" alt="lose">
           </b-col>
         </b-row>
         <b-row align-h="center">
