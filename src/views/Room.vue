@@ -51,7 +51,7 @@
         <b-row align-h="center">
           <b-col cols='auto'>
             <img v-if="playerWin === true" src="../assets/win.png" alt="win">
-            <img v-if="playerwin === false" src="../assets/lose.png" alt="lose">
+            <img v-if="playerWin === false" src="../assets/lose.png" alt="lose">
           </b-col>
         </b-row>
         <b-row align-h="center">
