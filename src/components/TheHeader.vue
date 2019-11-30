@@ -2,9 +2,9 @@
   <b-navbar variant="dark" type="dark" class="sticky-top" >
     <b-navbar-brand to="/" class="ml-2">
       <img
-        src="https://placekitten.com/g/30/30"
+        src="../assets/player-icons/knight.png"
         class="d-inline-block align-top pr-3"
-        alt="Kitten"
+        alt="knight"
       >
       <img
         src="../assets/avalon Header.png"
