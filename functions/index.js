@@ -178,6 +178,7 @@ exports.nextLeader = functions.database.ref('/rooms/{roomID}/gamePhase').onUpdat
   if (snapshot.after._data === 2) {
     const playerRef = snapshot.after.ref.parent.child('players')
     const leaderRef = snapshot.after.ref.parent.child('leader')
+    const gamePhaseRef = snapshot.after.ref.parent.child('gamePhase')
     const players = await playerRef.once('value')
     const leader = await leaderRef.once('value')
     var temp = [];
@@ -192,7 +193,8 @@ exports.nextLeader = functions.database.ref('/rooms/{roomID}/gamePhase').onUpdat
         i = i + 1;
     });
     const next = index % temp.length
-    return await leaderRef.set(temp[next])
+    await leaderRef.set(temp[next])
+    await gamePhaseRef.set(3)
   }
   return null
 })
