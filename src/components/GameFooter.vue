@@ -1,6 +1,14 @@
 <template>
   <div class="mx-auto">
-    <div v-if="room.gamePhase == 4">
+    <div v-if="room.gamePhase === 3">
+      <b-col cols="auto" class="mx-auto" v-if="isVisible">
+        <b-button variant="success" class="btn-vote mx-3" @click="confirmTeam">Confirm Team</b-button>
+      </b-col>
+      <b-col cols="auto" class="mx-auto" v-if="!isVisible">
+        <h3 class="text-grey">Waiting for leader select team...</h3>
+      </b-col>
+    </div>
+    <div v-if="room.gamePhase === 4">
       <b-col cols="auto" class="mx-auto" v-if="isVisible">
         <b-button variant="success" class="btn-vote mx-3" @click="voteApprove(true)">Approve</b-button>
         <b-button variant="danger" class="btn-vote mx-3" @click="voteApprove(false)">Reject</b-button>
@@ -9,7 +17,7 @@
         <h3 class="text-grey">Waiting for another vote...</h3>
       </b-col>
     </div>
-    <div v-if="room.gamePhase == 5">
+    <div v-if="room.gamePhase === 5">
       <b-col cols="auto" class="mx-auto" v-if="isVisible">
         <b-button variant="success" class="btn-vote mx-3" @click="voteSuccess(true)">success</b-button>
         <b-button variant="danger" class="btn-vote mx-3" v-if="isCurrentUserBad" @click="voteSuccess(false)">Fail</b-button>
@@ -64,6 +72,9 @@ export default {
     }
   },
   methods: {
+    confirmTeam () {
+      console.log('cconfirm')
+    },
     voteSuccess (bool) {
       this.$store.dispatch('Room/voteSuccess', { roomId: this.$route.params.roomId, userId: this.user.uid, vote: bool })
         .then(() => {
@@ -74,8 +85,14 @@ export default {
         })
     },
     checkPhase (phase) {
-      if (phase === 5) {
-        let playerIndex = this.room.players.findIndex(p => p.id === this.user.uid)
+      let playerIndex = this.room.players.findIndex(p => p.id === this.user.uid)
+      if (phase === 3) {
+        if (this.room.leader === this.user.uid) {
+          this.isVisible = true
+        } else {
+          this.isVisible = false
+        }
+      } else if (phase === 5) {
         if (playerIndex > -1) {
           this.isVisible = this.room.players[playerIndex].isSelected
           console.log('work')
