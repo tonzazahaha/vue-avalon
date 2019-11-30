@@ -42,7 +42,7 @@
       footer-bg-variant="secondary"
       footer-border-variant="secondary"
       hide-footer title= "Using Component Methods"
-      v-if="room.gamePhase === 6 && playerWin"
+      v-if="room.gamePhase === 6 && room.win"
     >
       <template v-slot:modal-header class="mx-auto">
         <h5 v-if="playerWin === true" class="mx-auto">YOU WIN!</h5>
