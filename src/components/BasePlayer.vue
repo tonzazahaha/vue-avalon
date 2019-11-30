@@ -1,6 +1,6 @@
 <template>
   <div class="player">
-    <div class="player-image" :class="{'isEmpty': player.displayName === ''}" @click="select">
+    <div class="player-image" :class="{'isEmpty': player.displayName === ''}" @click="selectTeam">
       <img v-if="player.displayName !== ''"
         alt=""
         :src="player.photoURL" class="player-image"
@@ -64,8 +64,10 @@ export default {
     }
   },
   methods: {
-    select () {
-      this.$store.dispatch('Room/selectPlayer', { index: this.index })
+    selectTeam () {
+      if (this.user.uid === this.leader && this.gamePhase === 3) {
+        this.player.isSelected = this.player.isSelected === 1 ? 0 : 1
+      }
     }
   }
 }

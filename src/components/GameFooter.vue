@@ -73,7 +73,8 @@ export default {
   },
   methods: {
     confirmTeam () {
-      console.log('cconfirm')
+      const selected = this.room.players.filter(player => player.isSelected)
+      console.log(selected.length)
     },
     voteSuccess (bool) {
       this.$store.dispatch('Room/voteSuccess', { roomId: this.$route.params.roomId, userId: this.user.uid, vote: bool })
