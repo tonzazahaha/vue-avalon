@@ -240,7 +240,7 @@ exports.checkEndGame = functions.database.ref('/rooms/{roomID}/gamePhase').onUpd
 
     if (gamePhaseData.val() === 6) {
         // if phase 6
-        if (currentMissionData.val() === 5) {
+        if (currentMissionData.val() >= 3) {
             // if last mission then calculate the team who win by counting the mission result
             let success = 0;
             let fail = 0;
@@ -253,26 +253,24 @@ exports.checkEndGame = functions.database.ref('/rooms/{roomID}/gamePhase').onUpd
                 }
             })
 
-            if (success > fail) {
+            if (success >= 3) {
                 // if succes more than fail good team win
                 return win.set('good');
-            } else {
+            } else if (fail >= 3) {
                 // else bad team win
                 return win.set('bad')
             }
-
-        } else {
-            // if not last mission then go to next mission and set phase to 2 (assign new leader)
-            await currentMission.transaction(current => {
-                return (current || 0) + 1;
-            })
-            // re selected team
-            playersData.forEach(player => {
-                players.child(player.key + '/isSelected').set(0);
-            })
-
-            return gamePhase.set(2);
         }
+    // if not last mission then go to next mission and set phase to 2 (assign new leader)
+    await currentMission.transaction(current => {
+        return (current || 0) + 1;
+    })
+    // re selected team
+    playersData.forEach(player => {
+        players.child(player.key + '/isSelected').set(0);
+    })
+
+        return gamePhase.set(2);
     }
     return null;
 })
